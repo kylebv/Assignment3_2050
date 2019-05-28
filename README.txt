@@ -1,0 +1,1 @@
+put server.xml in your tomcat/conf folder
