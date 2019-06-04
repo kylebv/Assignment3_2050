@@ -1,6 +1,7 @@
 package models;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -9,13 +10,13 @@ import java.util.List;
 public class KnowledgeBaseArticleModel {
     String user, category, title, body;
     int userID, ticketID;
-    LocalDateTime dateCreated;
+    Date dateCreated;
     List<FileModel> files;
 
     public KnowledgeBaseArticleModel() {
     }
 
-    public KnowledgeBaseArticleModel(String user, String category, String title, String body, int userID, int ticketID, LocalDateTime dateCreated, List<FileModel> files) {
+    public KnowledgeBaseArticleModel(String user, String category, String title, String body, int userID, int ticketID, Date dateCreated, List<FileModel> files) {
 
         this.user = user;
         this.category = category;
@@ -75,11 +76,11 @@ public class KnowledgeBaseArticleModel {
         this.ticketID = ticketID;
     }
 
-    public LocalDateTime getDateCreated() {
+    public Date getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(LocalDateTime dateCreated) {
+    public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
     }
 

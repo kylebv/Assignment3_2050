@@ -6,30 +6,32 @@ import java.io.File;
  * Created by kyleb on 2/06/2019.
  */
 public class FileModel {
-    File fileData;
-    String fileExtension;
+    int fileID;
+    String fileName;
 
-    public FileModel(File fileData, String fileExtension) {
-        this.fileData = fileData;
-        this.fileExtension = fileExtension;
+    public FileModel(int fileID, String fileName) {
+        this.fileID = fileID;
+        this.fileName = fileName;
+    }
+
+    public int getFileID() {
+        return fileID;
+    }
+
+    public void setFileID(int fileID) {
+        this.fileID = fileID;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     public FileModel() {
     }
 
-    public File getFileData() {
-        return fileData;
-    }
 
-    public void setFileData(File fileData) {
-        this.fileData = fileData;
-    }
-
-    public String getFileExtension() {
-        return fileExtension;
-    }
-
-    public void setFileExtension(String fileExtension) {
-        this.fileExtension = fileExtension;
-    }
 }

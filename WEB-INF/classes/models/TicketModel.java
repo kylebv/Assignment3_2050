@@ -1,6 +1,7 @@
 package models;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ public class TicketModel extends KnowledgeBaseArticleModel {
     public TicketModel() {
     }
 
-    public TicketModel(String user, String category, String title, String body, int userID, int ticketID, LocalDateTime dateCreated, List<FileModel> files, String status, List<CommentModel> comment) {
+    public TicketModel(String user, String category, String title, String body, int userID, int ticketID, Date dateCreated, List<FileModel> files, String status, List<CommentModel> comment) {
         super(user, category, title, body, userID, ticketID, dateCreated, files);
         this.status = status;
         this.comment = comment;
@@ -27,11 +28,11 @@ public class TicketModel extends KnowledgeBaseArticleModel {
         this.status = status;
     }
 
-    public List<CommentModel> getComment() {
+    public List<CommentModel> getComments() {
         return comment;
     }
 
-    public void setComment(List<CommentModel> comment) {
+    public void setComments(List<CommentModel> comment) {
         this.comment = comment;
     }
 }

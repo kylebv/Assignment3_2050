@@ -1,6 +1,7 @@
 package models;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Created by kyleb on 2/06/2019.
@@ -8,12 +9,12 @@ import java.time.LocalDateTime;
 public class CommentModel {
     String user, body;
     int userID;
-    LocalDateTime date;
+    Date date;
 
     public CommentModel() {
     }
 
-    public CommentModel(String user, String body, int userID, LocalDateTime date) {
+    public CommentModel(String user, String body, int userID, Date date) {
         this.user = user;
         this.body = body;
         this.userID = userID;
@@ -44,11 +45,11 @@ public class CommentModel {
         this.userID = userID;
     }
 
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 }
