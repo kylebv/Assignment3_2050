@@ -19,7 +19,7 @@
 				<form action="Controller" method="POST">	
 					<div> 	<input type="text" id= "formEntry" name="userName" size="5" /> </div>
 					<div>  	<input type="text" id= "formEntry" name="password" size="5" /> </div>
-					<div> <input id= "submitButton" type="submit" value="Sign In" />
+					<div> <input id= "submitButton" type="submit" value="Sign In" /> </div>
 				</form>
 			</div>
 		
