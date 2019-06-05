@@ -14,7 +14,8 @@
 		
 		<div id=pageContent>
 			<div id=loginForm>
-				<img src="images/logo.png" id="logo" alt="placeholder" >
+				<img src="images/logo.png" id="logo" alt="placeholder" ><hr>
+				<p>Sign In</p>
 				<form action="Controller" method="POST">	
 					<div> 	<input type="text" id= "formEntry" name="userName" size="5" /> </div>
 					<div>  	<input type="text" id= "formEntry" name="password" size="5" /> </div>
@@ -24,7 +25,7 @@
 		
 			<c:if test = "${param.isLogin != null}">
 				<div id=errorMessage>
-					<p> Error when loging on, please try again. </p>
+					<p> Error loging on, please try again. </p>
 				</div>
 			</c:if>
 		</div>

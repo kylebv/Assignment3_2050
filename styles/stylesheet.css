@@ -25,15 +25,19 @@ h1 {
 	
 	color: #777;
 }
-
+hr {
+	width: 90%;
+	color: #777;
+	border: 0.5px solid;
+}
 #logo {
 	margin-top: 20px;
 }
 #loginForm {
 	margin-left: 780px;
 	margin-top: 200px;
-	height: 400px;
-	width: 355px;
+	height: 450px;
+	width: 345px;
 	background-color: white;
 	text-align: center;
 	font-family: proxima nova, Arial, Helvetica, sans-serif;
