@@ -1,7 +1,5 @@
 
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
-<%@page import="models.User" %>
-<jsp:useBean id="game" class="dealOrNoDeal.game" scope="session" />
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,17 +7,18 @@
 		<meta charset="UTF-8">
 		<title>Login Page</title>
 		<script src="JavaScriptLibrary.js"></script>
-		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CssSheet.css" />
+		<link href="styles/stylesheet.css" type="text/css" rel="stylesheet"  />
 	</head>
 	<body>
 		<div class=pageheader> <h1> IT Services </h1> <div>
 		
 		<div id=pageContent>
 			<div id=loginForm>
+				<img src="images/logo.png" id="logo" alt="placeholder" >
 				<form action="Controller" method="POST">	
-					<div> User Name: 	<input type="text" name="userName" size="5" /> </div>
-					<div> Password: 	<input type="text" name="password" size="5" /> </div>
-					<div> <input type="submit" value="Login" />
+					<div> 	<input type="text" id= "formEntry" name="userName" size="5" /> </div>
+					<div>  	<input type="text" id= "formEntry" name="password" size="5" /> </div>
+					<div> <input id= "submitButton" type="submit" value="Sign In" />
 				</form>
 			</div>
 		
