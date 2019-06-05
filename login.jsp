@@ -22,7 +22,13 @@
 					<div> <input id= "submitButton" type="submit" value="Sign In" /> </div>
 				</form>
 			</div>
-			
+		
+			<c:if test = "${param.isLoginError != null}">
+				<div id=errorMessage>
+					<p> Error loging on, please try again. </p>
+				</div>
+			</c:if>
+
 		</div>
 		
 	</body>
