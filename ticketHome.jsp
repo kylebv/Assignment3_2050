@@ -20,7 +20,7 @@
 		</div>
 		
 		<div id=pageContent>
-			<c:if test="${User.roleID == ADMIN}">
+			<c:if test="${param.roleID == 'ADMIN'}">
 				<div id=sortingBar> 
 					<h2> Select Type: </h2>
 					<div class=Buttons> 
@@ -29,7 +29,6 @@
 						<span class=hardwareButton> Hardware </span> 
 						<span class=emailButton> Email </span> 
 						<span class=accountButton> Account </span> 
-						<span class=defaultButton> Default </span> 
 					</div>
 				</div>
 			</c:if>
