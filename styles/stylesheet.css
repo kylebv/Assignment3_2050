@@ -93,7 +93,6 @@ hr {
 	box-sizing: border-box;
 	resize: none;
 	font-size: 16px;
-	text-align: center;
 }
 
 .firstInputs {
@@ -102,6 +101,7 @@ hr {
 }
 .radios {
 	margin: 5px;
+	text-align: center;
 }
 #logo {
 	margin-top: 5%;
@@ -171,7 +171,6 @@ hr {
 	 margin-right: 2px;
 	 margin-top: 15px;
 	 border-radius: 5px;
-	 border-color: black;
 	 font-family: proxima nova, Arial, Helvetica, sans-serif;
 	 font-size: 16px;
  }
@@ -188,12 +187,11 @@ hr {
 	 margin: auto;
 	 line-height: 20px;
 	 padding: 10px;
-	 border: 1px solid;
 	 border-radius: 5px;
 	 display: inline;
-	 border-color: black;
 	 font-family: proxima nova, Arial, Helvetica, sans-serif;
 	 font-size: 16px;
+	 
  }
  #formEntry {
 	 width: 290px;
