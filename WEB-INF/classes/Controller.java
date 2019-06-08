@@ -9,91 +9,160 @@ import models.*;
 @WebServlet(urlPatterns = {"/Controller"})
 public class Controller extends HttpServlet {
 	
+	//Query class login/username functions
+	//File stuff
+	
     public void doPost(HttpServletRequest request, HttpServletResponse response) 
     	throws ServletException, IOException {
-			
 		//-------------Get-Information---------------------------------------
-		HttpSession session = request.getSession() //inside a servlet
-		String userName = session.getAttribute("j_username");
-		String role = null;//Get role from database
+		HttpSession session = request.getSession(); 
+		String userName = session.getAttribute("userName");
+		String role = session.getAttribute("role");
 		String pageSrc = request.getAttribute("page");
 		QueryClass qc = QueryClass();
 		//--------------------------------------------------------------------------
 		String nextJSP = null;
 		//--------------Decision-Tree-For-Page-State--------------------------------
 		switch(pageSrc){
-			case "login":
+			case "login"://All users
 				String submitUserName = request.getAttribute("userName");
 				String submitPassword = request.getAttribute("password");
 				if(submitUserName != null || submitPassword != null){
-					boolean login = true;//Check login (NEED TO CORRECT)!!!
-					if(login){
-						//Set login to session(NEED TO CORRECT)!!!
+					if(isVaildLogin(qc,submitUserName,submitPassword)){
+						role = qc.getRoleByUserName(submitUserName);
+						login(request,session,submitUserName,role);
 						nextJSP = sendTicketHome(request,session,qc,null);
-					}else{
-						nextJSP = sendLogin(request,session,"ERROR!!!!!!!!");
-					}
+					}else nextJSP = sendLogin(request,session,"ERROR!!!!!!!!");
 				}else nextJSP = sendLogin(request,session,null);
 			break;
-			case "ticketHome":
-				nextJSP = navigationBarCheck(request,session,qc);
-				if(nextJSP == null){
-					String category = request.getAttribute("categoryBar");
-					String viewTicket = request.getAttribute("viewTicket");
-					if(categoryBar != null) nextJSP = sendTicketHome(request,session,qc,categoryBar);
-					else if(viewTicket != null) nextJSP = sendTicketView(request,session,qc,viewTicket);
-					else nextJSP = sendTicketHome(request,session,qc,null);
+			case "ticketHome"://All users
+				if(role == null) nextJSP = sendLogin(request,session,null);
+				else{
+					nextJSP = navigationBarCheck(request,session,qc);
+					if(nextJSP == null){
+						String category = request.getAttribute("categoryBar");
+						String viewTicket = request.getAttribute("viewTicket");
+						if(categoryBar != null) nextJSP = sendTicketHome(request,session,qc,categoryBar);
+						else if(viewTicket != null) nextJSP = sendTicketView(request,session,qc,viewTicket);
+						else nextJSP = sendTicketHome(request,session,qc,null);
+					}
 				}
 			break;
-			case "ticketView":
-				nextJSP = navigationBarCheck(request,session,qc);
-				if(nextJSP == null){
+			case "ticketView"://All users
+				if(role == null) nextJSP = sendLogin(request,session,null);
+				else{
+					nextJSP = navigationBarCheck(request,session,qc);
+					if(nextJSP == null){
+						String updateTicket = request.getAttribute("updateTicket");
+						String toArticle = request.getAttribute("toArticle");
+						String viewTicket = request.getAttribute("viewTicket");
+						String issueStatus = request.getAttribute("issueStatus");
+						String issueCommentTitle = request.getAttribute("issueCommentTitle");
+						String issueCommentBody = request.getAttribute("issueCommentBody");
+						if(updateTicket != null){
+							TicketModel ticket = qc.getTicket(viewTicket);
+							boolean Error = false, Comment = false;
+							if(!ticket.getStatus().equals(issueStatus)){
+								switch(issueStatus){
+									case "inProgress":
+										if(role.equals("ADMIN") && (ticket.getStatus().equals("new") || ticket.getStatus().equals("completed")))
+											ticket.setStatus(issueStatus);
+										else if(role.equals("USER") && ticket.getStatus().equals("completed"))
+											ticket.setStatus(issueStatus);
+										else 
+											Error = true;
+									break;
+									case "completed":
+										if(role.equals("ADMIN") && (ticket.getStatus().equals("new") || ticket.getStatus().equals("inProgress")))
+											ticket.setStatus(issueStatus);	
+										else 
+											Error = true;										
+									break;
+									case "resolved":
+										if(role.equals("USER") && ticket.getStatus().equals("completed"))
+											ticket.setStatus(issueStatus);			
+										else 
+											Error = true;										
+									break;
+									default:
+										Error = true;
+									break;
+								}
+							}
+							Comment = issueCommentBody != null && issueCommentTitle != null;
+							Error = issueCommentBody != null ^ issueCommentTitle != null;
+							if(Error)request.setAttribute("isError","t");
+							else {
+								if(Comment)qc.addComment(viewTicket,issueCommentTitle,issueCommentBody);
+								//ADD TICKET STATUS CHANGE@#%@$%&@%$)$%^VQ#%Y(@%*V#*%YV%S#(UYK)N$VME%Y( S$M (S$%(YUS ($
+							}
+							nextJSP = sendTicketView(request,session,qc,viewTicket);
+						}else if(toArticle != null){
+							if( role.equals("ADMIN") && ticket.getStatus().equals("resolved"){
+								//CHANGE TICKET TO ARTICLE@$%&@%$)$%^VQ#%Y(@%*V#*%YV%S#(UYK)N$VME%Y( S$M (S$%(YUS ($
+								 nextJSP = sendTicketHome(request,session,qc,null);
+							}else{
+								nextJSP = sendTicketView(request,session,qc,viewTicket);
+							}
+						}else nextJSP = sendTicketView(request,session,qc,viewTicket);
+					}
+				}					
+			break;
+			// case "ticketToArticle"://ADMIN
+				// if(!role.equals("ADMIN")) nextJSP = sendLogin(request,session,null);
+				// else{
+					// nextJSP = navigationBarCheck(request,session,qc);
+					// if(nextJSP == null){
 					
-				}			
+					// }
+				// }
+			// break;
+			case "addNewTicket"://USERS
+				if(!role.equals("USER")) nextJSP = sendLogin(request,session,null);
+				else{
+					nextJSP = navigationBarCheck(request,session,qc);
+					if(nextJSP == null){
+						String issueName = request.getAttribute("issueName");
+						String issueDescription = request.getAttribute("issueDescription");
+						String issueCategory = request.getAttribute("issueCategory");
+						//Get files
+						if(issueName != null && issueDescription != null && issueCategory != null){
+							qc.addTicket(userName,issueName,issueDescription,issueCategory,null/*not null*/);//NULL needs to be changed to file paths!!!!!!
+							//ADDD FILES
+							nextJSP = sendTicketHome(request,session,qc,null);
+						}else nextJSP = sendAddNewTicket(request,session,"ERROR!!!!!!!!");
+					}
+				}					
 			break;
-			case "ticketToArticle":
-				nextJSP = navigationBarCheck(request,session,qc);
-				if(nextJSP == null){
-					
-				}			
+			case "knowledgeBase"://All Users
+				if(role == null) nextJSP = sendLogin(request,session,null);
+				else{
+					nextJSP = navigationBarCheck(request,session,qc);
+					if(nextJSP == null){
+						String category = request.getAttribute("categoryBar");
+						String viewArticle = request.getAttribute("viewArticle");
+						if(categoryBar != null) nextJSP = sendKnowledgeBase(request,session,qc,categoryBar);
+						else if(viewArticle != null) nextJSP = sendArticle(request,session,qc,viewArticle);
+						else nextJSP = sendKnowledgeBase(request,session,qc,null);
+					}	
+				}
 			break;
-			case "addNewTicket":
-				nextJSP = navigationBarCheck(request,session,qc);
-				if(nextJSP == null){
-					String issueName = request.getAttribute("issueName");
-					String issueDescription = request.getAttribute("issueDescription");
-					String issueCategory = request.getAttribute("issueCategory");
-					//Get files
-					if(issueName != null && issueDescription != null && issueCategory != null){
-						qc.addTicket(userName,issueName,issueDescription,issueCategory,null/*not null*/);//NULL needs to be changed to file paths!!!!!!
-						//ADDD FILES
-						nextJSP = sendTicketHome(request,session,qc,null);
-					}else nextJSP = sendAddNewTicket(request,session,"ERROR!!!!!!!!");
-				}			
-			break;
-			case "knowledgeBase":
-				nextJSP = navigationBarCheck(request,session,qc);
-				if(nextJSP == null){
-					String category = request.getAttribute("categoryBar");
-					String viewArticle = request.getAttribute("viewArticle");
-					if(categoryBar != null) nextJSP = sendKnowledgeBase(request,session,qc,categoryBar);
-					else if(viewArticle != null) nextJSP = sendArticle(request,session,qc,viewArticle);
-					else nextJSP = sendKnowledgeBase(request,session,qc,null);
-				}			
-			break;
-			case "article":
-				nextJSP = navigationBarCheck(request,session,qc);
-				if(nextJSP == null){
-					String viewArticle = request.getAttribute("viewArticle");
-					nextJSP = sendArticle(request,session,qc,viewArticle);
-				}			
+			case "article"://All Users
+				if(role == null) nextJSP = sendLogin(request,session,null);
+				else{
+					nextJSP = navigationBarCheck(request,session,qc);
+					if(nextJSP == null){
+						String viewArticle = request.getAttribute("viewArticle");
+						nextJSP = sendArticle(request,session,qc,viewArticle);
+					}
+				}					
 			break;			
 			default:
 				nextJSP = sendLogin(request,session,null);
 			break;
 		}
 		request.setAttribute("roleID",role);
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);//NEEd TO CHANGE SO WEB INF HOLD JSP
 		dispatcher.forward(request,response);
 		//--------------------------------------------------------------------------
 	} 
@@ -109,7 +178,19 @@ public class Controller extends HttpServlet {
 	}
 	
 	private void logout( HttpServletRequest request, HttpSession session){
-	//DO this LATER
+		session.setAttribute("userName",null);
+		session.setAttribute("role",null);
+	}
+	
+	private void login( HttpServletRequest request, HttpSession session, String name, String role){
+		session.setAttribute("userName",name);
+		session.setAttribute("role",role);
+	}
+	
+	private boolean isVaildLogin(QueryClass qc,String name,String pw){
+		String dbpw = qc.getPasswordByUserName(name);
+		if(dbpw != null) if(dbpw.equals(pw)) return true;
+		return false;
 	}
 	
 	private String sendLogin(HttpServletRequest request, HttpSession session, String loginError){
@@ -119,8 +200,8 @@ public class Controller extends HttpServlet {
 	}
 	
 	private String sendTicketHome(HttpServletRequest request, HttpSession session, QueryClass qc, String sortType){
-		String role = null;//Get role from database
-		String userName = session.getAttribute("j_username");
+		String userName = session.getAttribute("userName");
+		String role = session.getAttribute("role");
 		List<TicketModel> list = null;
 		if(role.equals("ADMIN")){
 			if(sortType == null) list = qc.getAllTickets();
