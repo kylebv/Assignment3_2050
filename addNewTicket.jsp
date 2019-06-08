@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -12,7 +11,6 @@
 			<input name="page" type="hidden" value="addNewTicket"/>
 			<input name="navigationBar" type="hidden" value=""/>
 		</form>
-		
 		<div class="pageheader"> 
 			<img src="images/logoSml.png" id="logoSml" alt="placeholder" >
 			<div class="navagationBar"> 
@@ -21,21 +19,37 @@
 					<button class="button" onclick="clickHandlerNavBar('logout')"> Logout </button> 				
 			</div>
 		</div>
-
 		<div class="pageContent">
-		
 			<form>
-			<br>Issue Name:<input type="text" name="issueName"/>
-			<br>Issue Description:<input type="text" name="issueDescription"/>
-			<div>Category:
-			<br>Network:<input type="radio" name="issueCategory" value="Network"/>
-			Software: <input type="radio" name="issueCategory" value="Software"/>
-			HardWare: <input type="radio" name="issueCategory" value="Hardware"/>
-			Email: <input type="radio" name="issueCategory" value="Email"/>
-			Account: <input type="radio" name="issueCategory" value="Account"/></div>
-			<button name ="file upload" value ="file upload"/><br>
-			<input name="page" type="hidden" value="addNewTicket"/>
-			<input type="submit"/>
+				<div class="addTicketElement">
+					<h1> New Ticket </h1>
+				</div>
+				<hr>
+				<div class="addTicketElement">
+					<p class="firstInputs">Issue Name:</p><textarea  id="issueName" name="issueName"></textarea>
+				</div>
+				<div class="addTicketElement">	
+					<p class="firstInputs">Description:</p><textarea  id="issueDescription" name="issueDescription"></textarea>
+				</div>
+				<div class="addTicketElement">
+					Category:
+					<br>
+					<div class="radios">
+						<label class="radioButton"> Network: <input type="radio" name="issueCategory"  value="Network"/></label>
+						<label class="radioButton"> Software: <input type="radio" name="issueCategory" value="Software"/></label>
+						<label class="radioButton"> HardWare: <input type="radio" name="issueCategory" value="Hardware"/></label>
+						<label class="radioButton"> Email: <input type="radio" name="issueCategory" value="Email"/></label>
+						<label class="radioButton"> Account: <input type="radio" name="issueCategory" value="Account"/></label>
+					</div>
+				</div>
+				<div class="addTicketElement">	
+					<p class="firstInputs">Upload File:</p><button name ="file upload" class= "browseButton" value="file upload">Browse</button>
+				</div>
+				<hr>
+				<input name="page" type="hidden" value="addNewTicket"/>
+				<div class="submitElement">	
+					<input class= "submitButton" type="submit"/>
+				</div>	
 			</form>
 			<c:if test = "${requestScope.error != null}">
 				<div id="errorMessage">
@@ -43,6 +57,5 @@
 				</div>
 			</c:if>
 		</div>
-		
 	</body>
 </html>

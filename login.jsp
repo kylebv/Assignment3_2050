@@ -12,7 +12,7 @@
 	<body>
 		<div class="pageheader"> <img src="images/logoSml.png" id="logoSml" alt="placeholder" > <div>
 		
-		<div id="pageContent">
+		
 			<div id="loginForm">
 				<img src="images/logo.png" id="logo" alt="placeholder" ><hr>
 				<p>Sign In</p>
@@ -30,7 +30,7 @@
 				</div>
 			</c:if>
 
-		</div>
+		
 		
 	</body>
 </html>

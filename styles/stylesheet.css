@@ -14,7 +14,7 @@ h1 {
 	font-family: proxima nova, Arial, Helvetica, sans-serif;
 	font-size: 30px;
 	font-weight: lighter;
-	color: #777;
+	color: black;
 	margin: auto;
 	text-align: center;
 	
@@ -25,15 +25,17 @@ hr {
 	border: 0.5px solid;
 }
 .pageContent {
-	background-color: white;
-	color: black;
-	width: 600px;
-	height: auto;
 	margin: auto;
-	padding: 10px;
-	border: 1px solid;
+	margin-top: 220px;
+	height: auto;
+	width: 800px;
+	background-color: rgba(255,255,255,0.9);
+	font-family: proxima nova, Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	font-weight: lighter;
+	border: 2px solid;
 	border-radius: 5px;
-	text-align: center;
+	color: #777;
 }
 .navagationBar {
 	
@@ -44,6 +46,62 @@ hr {
 	margin: 5px;
 	display: inline;
 	
+}
+.addTicketElement {
+	
+	
+	color: black;
+	width: 750px;
+	margin: auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	height: auto;
+	font-family: proxima nova, Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	display: block;
+	padding: 10px;
+	
+}
+.submitElement {
+	
+	
+	width: 750px;
+	margin: auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	height: auto;
+	font-family: proxima nova, Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	display: block;
+	padding: 10px;
+	text-align: center;
+	
+}
+#issueName {
+	width: 300px;
+	height: 35px;
+	box-sizing: border-box;
+	resize: none;
+	font-size: 16px;
+	display: inline;
+	
+}
+#issueDescription {
+	width: 720px;
+	max-width: 720px;
+	height: 100px;
+	box-sizing: border-box;
+	resize: none;
+	font-size: 16px;
+	text-align: center;
+}
+
+.firstInputs {
+	display: block;
+	margin: 5px;
+}
+.radios {
+	margin: 5px;
 }
 #logo {
 	margin-top: 5%;
@@ -80,9 +138,49 @@ hr {
 	 border-color: black;
 	 font-family: proxima nova, Arial, Helvetica, sans-serif;
 	 font-size: 16px;
+	 display:inline-block;
+
 	
 	 
  }
+  .browseButton {
+	 background-color: gray;
+	 color: white;
+	 width: 150px;
+	 margin: auto;
+	 margin-top: 15px;
+	 margin-bottom: 15px;
+	 height: 50px;
+	 border: 1px solid;
+	 border-radius: 5px;
+	 border-color: black;
+	 font-family: proxima nova, Arial, Helvetica, sans-serif;
+	 font-size: 16px;
+	 display:inline-block;
+
+	
+	 
+ }
+ .radioButton {
+	 background-color: #0087d0;
+	 color: white;
+	 width: 110px;
+     display:inline-block;
+	 line-height: 20px;
+	 padding: 15px;
+	 margin-right: 2px;
+	 margin-top: 15px;
+	 border-radius: 5px;
+	 border-color: black;
+	 font-family: proxima nova, Arial, Helvetica, sans-serif;
+	 font-size: 16px;
+ }
+ input[type=radio] {
+	 float: right;
+	 height: 4px;
+	 width: 4px;
+ }
+ 
  .button {
 	 background-color: #0087d0;
 	 color: white;
