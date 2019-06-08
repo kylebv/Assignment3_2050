@@ -23,12 +23,12 @@
 			<input name="viewTicket" type="hidden" value=""/>
 		</form>
 		
-		<div id=pageheader> 
-			<h1> IT Services </h1> 
-			<div id=navagationBar> 
-				<button onclick="clickHandlerNavBar('tickets')"> Tickets </button>
-				<button onclick="clickHandlerNavBar('knowledgeBase')"> KnowledgeBase </button> 
-				<button onclick="clickHandlerNavBar('logout')"> Logout </button> 				
+		<div class="pageheader"> 
+			<img src="images/logoSml.png" id="logoSml" alt="placeholder" >
+			<div class="navagationBar"> 
+					<button class="button" onclick="clickHandlerNavBar('tickets')"> Tickets </button>
+					<button class="button" onclick="clickHandlerNavBar('knowledgeBase')"> KnowledgeBase </button> 
+					<button class="button" onclick="clickHandlerNavBar('logout')"> Logout </button> 				
 			</div>
 		</div>
 		

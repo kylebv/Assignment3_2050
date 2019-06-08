@@ -2,6 +2,8 @@
 /* CSS Document */
 body {
 	background-image: url("../images/NewSpace.jpg");
+	background-attachment: fixed;
+	background-size: cover;
 	
 } 
 .pageheader {
@@ -27,6 +29,7 @@ hr {
 .pageContent {
 	margin: auto;
 	margin-top: 220px;
+	margin-bottom: 150px;
 	height: auto;
 	width: 800px;
 	background-color: rgba(255,255,255,0.9);
