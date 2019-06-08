@@ -37,5 +37,5 @@
 		username="c3166360"
 		password="280993"
 		driverClassName="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://localhost:3306/c3166360_db"/>
+		url="jdbc:mysql://teachdb/c3166360_db"/>
 </Context>
