@@ -10,6 +10,20 @@ import models.*;
 @WebServlet(urlPatterns = {"/Controller"})
 public class Controller extends HttpServlet {
 	
+	public class User{
+			public String userName;
+			public String role;
+			
+			public User(){
+				
+			}
+			
+			public User(String u,String r){
+				userName = u;
+				role = r;
+			}
+	}
+	
 	//Query class login/username functions
 	//File stuff
 	
@@ -17,10 +31,11 @@ public class Controller extends HttpServlet {
     	throws ServletException, IOException {
 		//-------------Get-Information---------------------------------------
 		HttpSession session = request.getSession(); 
-		String userName = session.getAttribute("userName");
-		String role = session.getAttribute("role");
+		User U = (User) session.getAttribute("user");
+		String userName = U.userName;
+		String role = U.role;
 		String pageSrc = request.getParameter("page");
-		QueryClass qc = QueryClass();
+		QueryClass qc = new QueryClass();
 		//--------------------------------------------------------------------------
 		String nextJSP = null;
 		//--------------Decision-Tree-For-Page-State--------------------------------
@@ -43,7 +58,7 @@ public class Controller extends HttpServlet {
 					if(nextJSP == null){
 						String category = request.getParameter("categoryBar");
 						String viewTicket = request.getParameter("viewTicket");
-						if(categoryBar != null) nextJSP = sendTicketHome(request,session,qc,categoryBar);
+						if(category != null) nextJSP = sendTicketHome(request,session,qc,category);
 						else if(viewTicket != null) nextJSP = sendTicketView(request,session,qc,viewTicket);
 						else nextJSP = sendTicketHome(request,session,qc,null);
 					}
@@ -60,8 +75,8 @@ public class Controller extends HttpServlet {
 						String issueStatus = request.getParameter("issueStatus");
 						String issueCommentTitle = request.getParameter("issueCommentTitle");
 						String issueCommentBody = request.getParameter("issueCommentBody");
+						TicketModel ticket = qc.getTicket(Integer.parseInt(viewTicket));
 						if(updateTicket != null){
-							TicketModel ticket = qc.getTicket(viewTicket);
 							boolean Error = false, Comment = false;
 							if(!ticket.getStatus().equals(issueStatus)){
 								switch(issueStatus){
@@ -92,9 +107,9 @@ public class Controller extends HttpServlet {
 							}
 							Comment = issueCommentBody != null && issueCommentTitle != null;
 							Error = issueCommentBody != null ^ issueCommentTitle != null;
-							if(Error)request.setParameter("isError","t");
+							if(Error) request.setAttribute("isError","t");
 							else {
-								if(Comment)qc.addComment(viewTicket,issueCommentTitle,issueCommentBody);
+								if(Comment)qc.addComment(Integer.parseInt(viewTicket),issueCommentTitle,issueCommentBody);
 								//ADD TICKET STATUS CHANGE@#%@$%&@%$)$%^VQ#%Y(@%*V#*%YV%S#(UYK)N$VME%Y( S$M (S$%(YUS ($
 							}
 							nextJSP = sendTicketView(request,session,qc,viewTicket);
@@ -142,7 +157,7 @@ public class Controller extends HttpServlet {
 					if(nextJSP == null){
 						String category = request.getParameter("categoryBar");
 						String viewArticle = request.getParameter("viewArticle");
-						if(categoryBar != null) nextJSP = sendKnowledgeBase(request,session,qc,categoryBar);
+						if(category != null) nextJSP = sendKnowledgeBase(request,session,qc,category);
 						else if(viewArticle != null) nextJSP = sendArticle(request,session,qc,viewArticle);
 						else nextJSP = sendKnowledgeBase(request,session,qc,null);
 					}	
@@ -179,13 +194,11 @@ public class Controller extends HttpServlet {
 	}
 	
 	private void logout( HttpServletRequest request, HttpSession session){
-		session.setParameter("userName",null);
-		session.setParameter("role",null);
+		session.setAttribute("user",null);
 	}
 	
 	private void login( HttpServletRequest request, HttpSession session, String name, String role){
-		session.setAttribute("userName",name);
-		session.setAttribute("role",role);
+		session.setAttribute("user",new User(name,role));
 	}
 	
 	private boolean isVaildLogin(QueryClass qc,String name,String pw){
@@ -196,13 +209,14 @@ public class Controller extends HttpServlet {
 	
 	private String sendLogin(HttpServletRequest request, HttpSession session, String loginError){
 		logout(request,session);
-		if(loginError != null) request.setParameter("isLoginError",loginError);
+		if(loginError != null) request.setAttribute("isLoginError",loginError);
 		return "ticketHome.jsp";
 	}
 	
 	private String sendTicketHome(HttpServletRequest request, HttpSession session, QueryClass qc, String sortType){
-		String userName = session.getAttribute("userName");
-		String role = session.getAttribute("role");
+		User U = (User) session.getAttribute("user");
+		String userName = U.userName;
+		String role = U.role;
 		List<TicketModel> list = null;
 		if(role.equals("ADMIN")){
 			if(sortType == null) list = qc.getAllTickets();
@@ -213,7 +227,8 @@ public class Controller extends HttpServlet {
 		return "ticketHome.jsp";
 	}
 	
-	private String sendTicketView(HttpServletRequest request, HttpSession session, QueryClass qc, String ID){
+	private String sendTicketView(HttpServletRequest request, HttpSession session, QueryClass qc, String id){
+		int ID = Integer.parseInt(id);
 		request.setAttribute("ticket",qc.getTicket(ID));
 		request.setAttribute("files",qc.getFiles(ID));
 		return "ticketView.jsp";
@@ -227,20 +242,22 @@ public class Controller extends HttpServlet {
 		return "knowledgeBase.jsp";
 	}
 	
-	private String sendArticle(HttpServletRequest request, HttpSession session, QueryClass qc, String ID){
+	private String sendArticle(HttpServletRequest request, HttpSession session, QueryClass qc, String id){
+		int ID = Integer.parseInt(id);
 		request.setAttribute("ticket",qc.getArticle(ID));
 		request.setAttribute("files",qc.getFiles(ID));
 		return "article.jsp";
 	}
 	
-	private String sendTicketToArticle(HttpServletRequest request, HttpSession session, QueryClass qc, String ID){
+	private String sendTicketToArticle(HttpServletRequest request, HttpSession session, QueryClass qc, String id){
+		int ID = Integer.parseInt(id);
 		request.setAttribute("ticket",qc.getTicket(ID));
 		request.setAttribute("files",qc.getFiles(ID));
 		return "ticketToArticle.jsp";
 	}
 	
 	private String sendAddNewTicket(HttpServletRequest request, HttpSession session, String error){
-		if(error != null) request.setParameter("error",error);
+		if(error != null) request.setAttribute("error",error);
 		return "addNewTicket.jsp";
 	}
 
