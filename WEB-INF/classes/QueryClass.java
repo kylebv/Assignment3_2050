@@ -1,7 +1,3 @@
-import models.CommentModel;
-import models.FileModel;
-import models.KnowledgeBaseArticleModel;
-import models.TicketModel;
 
 import javax.naming.NamingException;
 import javax.sql.*;

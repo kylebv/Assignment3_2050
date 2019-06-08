@@ -3,37 +3,44 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Login Page</title>
+		<title>Add new ticket page</title>
 		<script src="JavaScriptLibrary.js"></script>
-		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CssSheet.css" />
+		<link href="styles/stylesheet.css" type="text/css" rel="stylesheet"  />
 	</head>
 	<body>
+		<form name="navigationBar" action="Controller" method="POST" id="navigationBar">
+			<input name="page" type="hidden" value="addNewTicket"/>
+			<input name="navigationBar" type="hidden" value=""/>
+		</form>
+		
 		<div id=pageheader> 
 			<h1> IT Services </h1> 
 			<div id=navagationBar> 
-				<form action="Controller" method="POST" id="tickets">
-					<button type="submit"> Tickets </button> 
-				</form>
-				<form action="Controller" method="POST" id="knowledgeBase">
-					<button type="submit"> knowledgeBase </button> 
-				</form>	
-				<form action="Controller" method="POST" id="Logout">
-					<button type="submit"> Logout </button> 
-				</form>					
+				<button onclick="clickHandlerNavBar('tickets')"> Tickets </button>
+				<button onclick="clickHandlerNavBar('knowledgeBase')"> KnowledgeBase </button> 
+				<button onclick="clickHandlerNavBar('logout')"> Logout </button> 				
 			</div>
 		</div>
 		
 		<div id=pageContent>
 			<form>
-			<input type="text" name="issueName" value="issueName"/><br>
-			<input type="text" name="issueDescription" value="issueDescription"/><br>
-			<input type="radio" name="issueCategory" value="Network"/>
-			<input type="radio" name="issueCategory" value="Software"/>
-			<input type="radio" name="issueCategory" value="Hardware"/>
-			<input type="radio" name="issueCategory" value="Email"/>
-			<input type="radio" name="issueCategory" value="Account"/><br>
+			<br>Issue Name:<input type="text" name="issueName"/>
+			<br>Issue Description:<input type="text" name="issueDescription"/>
+			<div>Category:
+			<br>Network:<input type="radio" name="issueCategory" value="Network"/>
+			Software: <input type="radio" name="issueCategory" value="Software"/>
+			HardWare: <input type="radio" name="issueCategory" value="Hardware"/>
+			Email: <input type="radio" name="issueCategory" value="Email"/>
+			Account: <input type="radio" name="issueCategory" value="Account"/></div>
+			<button name ="file upload" value ="file upload"/><br>
+			<input name="page" type="hidden" value="addNewTicket"/>
 			<input type="submit"/>
 			</form>
+			<c:if test = "${requestScope.error != null}">
+				<div id=errorMessage>
+					<p> Error adding ticket, please try again. </p>
+				</div>
+			</c:if>
 		</div>
 		
 	</body>

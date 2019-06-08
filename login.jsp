@@ -19,11 +19,12 @@
 				<form action="Controller" method="POST">	
 					<div> 	<input type="text" id= "formEntry" name="userName" size="5" /> </div>
 					<div>  	<input type="text" id= "formEntry" name="password" size="5" /> </div>
+					<input name="page" type="hidden" value="login"/>
 					<div> <input id= "submitButton" type="submit" value="Sign In" /> </div>
 				</form>
 			</div>
 		
-			<c:if test = "${param.isLoginError != null}">
+			<c:if test = "${requestScope.isLoginError != null}">
 				<div id=errorMessage>
 					<p> Error loging on, please try again. </p>
 				</div>

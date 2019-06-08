@@ -5,17 +5,30 @@
 		<meta charset="UTF-8">
 		<title>Login Page</title>
 		<script src="JavaScriptLibrary.js"></script>
-		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CssSheet.css" />
+	<link href="styles/stylesheet.css" type="text/css" rel="stylesheet"  />
 	</head>
 	<body>
+		<form name="navigationBar" action="Controller" method="POST" id="navigationBar">
+			<input name="page" type="hidden" value="knowledgeBase"/>
+			<input name="navigationBar" type="hidden" value=""/>
+		</form>
+		
+		<form name="categoryBar" action="Controller" method="POST" id="categoryBar">
+			<input name="page" type="hidden" value="knowledgeBase"/>
+			<input name="categoryBar" type="hidden" value=""/>
+		</form>
+		
+		<form name="viewArticle" action="Controller" method="POST" id="viewArticle">
+			<input name="page" type="hidden" value="knowledgeBase"/>
+			<input name="viewArticle" type="hidden" value=""/>
+		</form>
+	
 		<div id=pageheader> 
 			<h1> IT Services </h1> 
 			<div id=navagationBar> 
-				<div class=Buttons>
-					<span class=ticketButton> Tickets </span> 
-					<span class=KBButton> Knowledge Base </span> 
-					<span class=logoutButton> Logout </span> 
-				</div>
+				<button onclick="clickHandlerNavBar('tickets')"> Tickets </button>
+				<button onclick="clickHandlerNavBar('knowledgeBase')"> KnowledgeBase </button> 
+				<button onclick="clickHandlerNavBar('logout')"> Logout </button> 				
 			</div>
 		</div>
 		
@@ -23,19 +36,18 @@
 			<div id=sortingBar> 
 				<h2> Select Type: </h2>
 				<div class=Buttons> 
-					<span class=networkButton> Network </span> 
-					<span class=softwareButton> Software </span> 
-					<span class=hardwareButton> Hardware </span> 
-					<span class=emailButton> Email </span> 
-					<span class=accountButton> Account </span> 
-					<span class=defaultButton> Default </span> 
+					<button onclick="clickHandlerCatBar('network')"> Network </button>
+					<button onclick="clickHandlerCatBar('software')"> Software </button> 
+					<button onclick="clickHandlerCatBar('hardware')"> Hardware </button> 				
+					<button onclick="clickHandlerCatBar('email')"> Email </button> 
+					<button onclick="clickHandlerCatBar('account')"> Account </button> 				
 				</div>
 			</div>
 			<div id=articleList>
-				    <c:forEach items="${articles}" var="KnowledgeBaseArticleModel">
+				    <c:forEach items="${requestScope.articles}" var="KnowledgeBaseArticleModel">
 						<div id="${element.ticketID}">
 							<c:out value="${element.title}">
-							<span class=viewButton> View Article </span> 
+							<button onclick="clickHandlerViewArticle(${element.ticketID})"class=viewButton> View Article </button> 
 						</div>
 					</c:forEach>
 			</div>

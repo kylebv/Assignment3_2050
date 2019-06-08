@@ -3,7 +3,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.WebServlet;
 import java.util.*;
-import models.*;
+
 
 
 
@@ -173,7 +173,7 @@ public class Controller extends HttpServlet {
 		switch(nvgbar){
 			case "tickets": return sendTicketHome(request,session,qc,null);
 			case "knowledgeBase": return sendKnowledgeBase(request,session,qc,null);
-			case "Logout": return sendLogin(request,session,null);
+			case "logout": return sendLogin(request,session,null);
 			default: return null;
 		}
 	}

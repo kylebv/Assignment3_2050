@@ -5,40 +5,45 @@
 		<meta charset="UTF-8">
 		<title>Login Page</title>
 		<script src="JavaScriptLibrary.js"></script>
-		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CssSheet.css" />
+		<link href="styles/stylesheet.css" type="text/css" rel="stylesheet"  />
 	</head>
 	<body>
+	
+		<form name="navigationBar" action="Controller" method="POST" id="navigationBar">
+			<input name="page" type="hidden" value="ticketView"/>
+			<input name="navigationBar" type="hidden" value=""/>
+		</form>
+		
+		
 		<div id=pageheader> 
 			<h1> IT Services </h1> 
 			<div id=navagationBar> 
-				<div class=Buttons>
-					<span class=ticketButton> Tickets </span> 
-					<span class=KBButton> Knowledge Base </span> 
-					<span class=logoutButton> Logout </span> 
-				</div>
+				<button onclick="clickHandlerNavBar('tickets')"> Tickets </button>
+				<button onclick="clickHandlerNavBar('knowledgeBase')"> KnowledgeBase </button> 
+				<button onclick="clickHandlerNavBar('logout')"> Logout </button> 				
 			</div>
 		</div>
 		
 		<div id=pageContent>
 			<div id=articleList>
 				<div>
-					<c:out value="${ticket.title}">
+					<c:out value="${requestScope.ticket.title}">
 				</div>
 				<div>
-					<c:out value="${ticket.user}">
+					<c:out value="${requestScope.ticket.user}">
 				</div>
 				<div>
-					<c:out value="${ticket.category}">
+					<c:out value="${requestScope.ticket.category}">
 				</div>
 				<div>
-					<c:out value="${ticket.body}">
+					<c:out value="${requestScope.ticket.body}">
 				</div>
 				<div>
-					<c:out value="${ticket.dateCreated}">
+					<c:out value="${requestScope.ticket.dateCreated}">
 				</div>
 				<div>
-					<c:forEach items="${ticket.comment}" var="CommentModel">
-						<div id="${element.userID}">
+					<c:forEach items="${requestScope.ticket.comment}" var="CommentModel">
+						<div>
 							<div class=body>
 								<c:out value="${element.body}">
 							</div>
@@ -49,17 +54,23 @@
 					</c:forEach>
 				</div>
 				<div>
-					<c:forEach items="${ticket.files}" var="FileModel">
+					<c:forEach items="${requestScope.ticket.files}" var="FileModel">
 						<div id="${element.fileExtention}">
 							<c:out value="${element.fileExtention}">
 						</div>
 					</c:forEach>
 				</div>
 				<div>
+					<c:if test="${requestSession.roleID == 'ADMIN' && requestScope.ticket.Status=='resolved'}">
+						<form name="toArticle" action="Controller" method="POST" id="toArticle">
+							<input name="page" type="hidden" value="ticketView"/>
+							<input name="toArticle" type="hidden" value="toArticle"/>
+							<input  type="submit" value="Submit to Article"/>
+						</form>
+					</c:if>
+					
 					<c:choose>
-						<c:when test="${User == \"ADMIN\"}">
-							<span class=logoutButton> Make Into Article </span> 
-						</c:when>
+						
 						<c:otherwise>
 							<span class=logoutButton> Update Status </span> 
 						</c:otherwise>

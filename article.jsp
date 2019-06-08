@@ -5,19 +5,25 @@
 		<meta charset="UTF-8">
 		<title>Login Page</title>
 		<script src="JavaScriptLibrary.js"></script>
-		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CssSheet.css" />
+		<link href="styles/stylesheet.css" type="text/css" rel="stylesheet"  />
 	</head>
 	<body>
+		<form name="navigationBar" action="Controller" method="POST" id="navigationBar">
+			<input name="page" type="hidden" value="article"/>
+			<input name="navigationBar" type="hidden" value=""/>
+		</form>
+		
+		
+		
 		<div id=pageheader> 
 			<h1> IT Services </h1> 
 			<div id=navagationBar> 
-				<div class=Buttons>
-					<span class=ticketButton> Tickets </span> 
-					<span class=KBButton> Knowledge Base </span> 
-					<span class=logoutButton> Logout </span> 
-				</div>
+				<button onclick="clickHandlerNavBar('tickets')"> Tickets </button>
+				<button onclick="clickHandlerNavBar('knowledgeBase')"> KnowledgeBase </button> 
+				<button onclick="clickHandlerNavBar('logout')"> Logout </button> 				
 			</div>
 		</div>
+		
 		
 		<div id=pageContent>
 			<div id=articleList>
