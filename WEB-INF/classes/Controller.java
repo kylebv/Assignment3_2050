@@ -124,15 +124,6 @@ public class Controller extends HttpServlet {
 					}
 				}					
 			break;
-/* 			case "ticketToArticle"://ADMIN
-				if(!role.equals("ADMIN")) nextJSP = sendLogin(request,session,null);
-				else{
-					nextJSP = navigationBarCheck(request,session,qc);
-					if(nextJSP == null){
-					
-					}
-				}
-			break; */
 			case "addNewTicket"://USERS
 				if(!role.equals("USER")) nextJSP = sendLogin(request,session,null);
 				else{
