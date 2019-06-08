@@ -6,6 +6,7 @@ import java.util.*;
 import models.*;
 
 
+
 @WebServlet(urlPatterns = {"/Controller"})
 public class Controller extends HttpServlet {
 	
@@ -98,7 +99,7 @@ public class Controller extends HttpServlet {
 							}
 							nextJSP = sendTicketView(request,session,qc,viewTicket);
 						}else if(toArticle != null){
-							if( role.equals("ADMIN") && ticket.getStatus().equals("resolved"){
+							if( role.equals("ADMIN") && ticket.getStatus().equals("resolved")){
 								//CHANGE TICKET TO ARTICLE@$%&@%$)$%^VQ#%Y(@%*V#*%YV%S#(UYK)N$VME%Y( S$M (S$%(YUS ($
 								 nextJSP = sendTicketHome(request,session,qc,null);
 							}else{
@@ -108,15 +109,15 @@ public class Controller extends HttpServlet {
 					}
 				}					
 			break;
-			// case "ticketToArticle"://ADMIN
-				// if(!role.equals("ADMIN")) nextJSP = sendLogin(request,session,null);
-				// else{
-					// nextJSP = navigationBarCheck(request,session,qc);
-					// if(nextJSP == null){
+/* 			case "ticketToArticle"://ADMIN
+				if(!role.equals("ADMIN")) nextJSP = sendLogin(request,session,null);
+				else{
+					nextJSP = navigationBarCheck(request,session,qc);
+					if(nextJSP == null){
 					
-					// }
-				// }
-			// break;
+					}
+				}
+			break; */
 			case "addNewTicket"://USERS
 				if(!role.equals("USER")) nextJSP = sendLogin(request,session,null);
 				else{

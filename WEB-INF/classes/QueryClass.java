@@ -11,6 +11,7 @@ import java.util.*;
 /**
  * Created by kyleb on 2/06/2019.
  */
+
 public class QueryClass {
     public static List<TicketModel> getAllTickets(){
         String query = "SELECT ID, username, categoryID, title, body, dateCreated, statusID FROM Ticket order by dateCreated desc;";
@@ -74,7 +75,7 @@ public class QueryClass {
         }
         for(String s : filePaths)
         {
-            addFile()
+            addFile();
         }
     }
 
