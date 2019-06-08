@@ -13,16 +13,17 @@
 			<input name="navigationBar" type="hidden" value=""/>
 		</form>
 		
-		<div id=pageheader> 
-			<h1> IT Services </h1> 
-			<div id=navagationBar> 
-				<button onclick="clickHandlerNavBar('tickets')"> Tickets </button>
-				<button onclick="clickHandlerNavBar('knowledgeBase')"> KnowledgeBase </button> 
-				<button onclick="clickHandlerNavBar('logout')"> Logout </button> 				
+		<div class="pageheader"> 
+			<img src="images/logoSml.png" id="logoSml" alt="placeholder" >
+			<div class="navagationBar"> 
+					<button class="button" onclick="clickHandlerNavBar('tickets')"> Tickets </button>
+					<button class="button" onclick="clickHandlerNavBar('knowledgeBase')"> KnowledgeBase </button> 
+					<button class="button" onclick="clickHandlerNavBar('logout')"> Logout </button> 				
 			</div>
 		</div>
+
+		<div class="pageContent">
 		
-		<div id=pageContent>
 			<form>
 			<br>Issue Name:<input type="text" name="issueName"/>
 			<br>Issue Description:<input type="text" name="issueDescription"/>
@@ -37,7 +38,7 @@
 			<input type="submit"/>
 			</form>
 			<c:if test = "${requestScope.error != null}">
-				<div id=errorMessage>
+				<div id="errorMessage">
 					<p> Error adding ticket, please try again. </p>
 				</div>
 			</c:if>
