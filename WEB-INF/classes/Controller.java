@@ -18,15 +18,15 @@ public class Controller extends HttpServlet {
 		HttpSession session = request.getSession(); 
 		String userName = session.getAttribute("userName");
 		String role = session.getAttribute("role");
-		String pageSrc = request.getAttribute("page");
+		String pageSrc = request.getParameter("page");
 		QueryClass qc = QueryClass();
 		//--------------------------------------------------------------------------
 		String nextJSP = null;
 		//--------------Decision-Tree-For-Page-State--------------------------------
 		switch(pageSrc){
 			case "login"://All users
-				String submitUserName = request.getAttribute("userName");
-				String submitPassword = request.getAttribute("password");
+				String submitUserName = request.getParameter("userName");
+				String submitPassword = request.getParameter("password");
 				if(submitUserName != null || submitPassword != null){
 					if(isVaildLogin(qc,submitUserName,submitPassword)){
 						role = qc.getRoleByUserName(submitUserName);
@@ -40,8 +40,8 @@ public class Controller extends HttpServlet {
 				else{
 					nextJSP = navigationBarCheck(request,session,qc);
 					if(nextJSP == null){
-						String category = request.getAttribute("categoryBar");
-						String viewTicket = request.getAttribute("viewTicket");
+						String category = request.getParameter("categoryBar");
+						String viewTicket = request.getParameter("viewTicket");
 						if(categoryBar != null) nextJSP = sendTicketHome(request,session,qc,categoryBar);
 						else if(viewTicket != null) nextJSP = sendTicketView(request,session,qc,viewTicket);
 						else nextJSP = sendTicketHome(request,session,qc,null);
@@ -53,12 +53,12 @@ public class Controller extends HttpServlet {
 				else{
 					nextJSP = navigationBarCheck(request,session,qc);
 					if(nextJSP == null){
-						String updateTicket = request.getAttribute("updateTicket");
-						String toArticle = request.getAttribute("toArticle");
-						String viewTicket = request.getAttribute("viewTicket");
-						String issueStatus = request.getAttribute("issueStatus");
-						String issueCommentTitle = request.getAttribute("issueCommentTitle");
-						String issueCommentBody = request.getAttribute("issueCommentBody");
+						String updateTicket = request.getParameter("updateTicket");
+						String toArticle = request.getParameter("toArticle");
+						String viewTicket = request.getParameter("viewTicket");
+						String issueStatus = request.getParameter("issueStatus");
+						String issueCommentTitle = request.getParameter("issueCommentTitle");
+						String issueCommentBody = request.getParameter("issueCommentBody");
 						if(updateTicket != null){
 							TicketModel ticket = qc.getTicket(viewTicket);
 							boolean Error = false, Comment = false;
@@ -91,7 +91,7 @@ public class Controller extends HttpServlet {
 							}
 							Comment = issueCommentBody != null && issueCommentTitle != null;
 							Error = issueCommentBody != null ^ issueCommentTitle != null;
-							if(Error)request.setAttribute("isError","t");
+							if(Error)request.setParameter("isError","t");
 							else {
 								if(Comment)qc.addComment(viewTicket,issueCommentTitle,issueCommentBody);
 								//ADD TICKET STATUS CHANGE@#%@$%&@%$)$%^VQ#%Y(@%*V#*%YV%S#(UYK)N$VME%Y( S$M (S$%(YUS ($
@@ -122,9 +122,9 @@ public class Controller extends HttpServlet {
 				else{
 					nextJSP = navigationBarCheck(request,session,qc);
 					if(nextJSP == null){
-						String issueName = request.getAttribute("issueName");
-						String issueDescription = request.getAttribute("issueDescription");
-						String issueCategory = request.getAttribute("issueCategory");
+						String issueName = request.getParameter("issueName");
+						String issueDescription = request.getParameter("issueDescription");
+						String issueCategory = request.getParameter("issueCategory");
 						//Get files
 						if(issueName != null && issueDescription != null && issueCategory != null){
 							qc.addTicket(userName,issueName,issueDescription,issueCategory,null/*not null*/);//NULL needs to be changed to file paths!!!!!!
@@ -139,8 +139,8 @@ public class Controller extends HttpServlet {
 				else{
 					nextJSP = navigationBarCheck(request,session,qc);
 					if(nextJSP == null){
-						String category = request.getAttribute("categoryBar");
-						String viewArticle = request.getAttribute("viewArticle");
+						String category = request.getParameter("categoryBar");
+						String viewArticle = request.getParameter("viewArticle");
 						if(categoryBar != null) nextJSP = sendKnowledgeBase(request,session,qc,categoryBar);
 						else if(viewArticle != null) nextJSP = sendArticle(request,session,qc,viewArticle);
 						else nextJSP = sendKnowledgeBase(request,session,qc,null);
@@ -152,7 +152,7 @@ public class Controller extends HttpServlet {
 				else{
 					nextJSP = navigationBarCheck(request,session,qc);
 					if(nextJSP == null){
-						String viewArticle = request.getAttribute("viewArticle");
+						String viewArticle = request.getParameter("viewArticle");
 						nextJSP = sendArticle(request,session,qc,viewArticle);
 					}
 				}					
@@ -168,7 +168,7 @@ public class Controller extends HttpServlet {
 	} 
 	
 	private String navigationBarCheck(HttpServletRequest request, HttpSession session, QueryClass qc){
-		String nvgbar = request.getAttribute("navigationBar");
+		String nvgbar = request.getParameter("navigationBar");
 		switch(nvgbar){
 			case "tickets": return sendTicketHome(request,session,qc,null);
 			case "knowledgeBase": return sendKnowledgeBase(request,session,qc,null);
@@ -178,8 +178,8 @@ public class Controller extends HttpServlet {
 	}
 	
 	private void logout( HttpServletRequest request, HttpSession session){
-		session.setAttribute("userName",null);
-		session.setAttribute("role",null);
+		session.setParameter("userName",null);
+		session.setParameter("role",null);
 	}
 	
 	private void login( HttpServletRequest request, HttpSession session, String name, String role){
@@ -195,7 +195,7 @@ public class Controller extends HttpServlet {
 	
 	private String sendLogin(HttpServletRequest request, HttpSession session, String loginError){
 		logout(request,session);
-		if(loginError != null) request.setAttribute("isLoginError",loginError);
+		if(loginError != null) request.setParameter("isLoginError",loginError);
 		return "ticketHome.jsp";
 	}
 	
@@ -239,7 +239,7 @@ public class Controller extends HttpServlet {
 	}
 	
 	private String sendAddNewTicket(HttpServletRequest request, HttpSession session, String error){
-		if(error != null) request.setAttribute("error",error);
+		if(error != null) request.setParameter("error",error);
 		return "addNewTicket.jsp";
 	}
 
