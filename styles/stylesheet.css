@@ -202,7 +202,7 @@ hr {
 	 border-radius: 5px;
 	 font-family: proxima nova, Arial, Helvetica, sans-serif;
 	 font-size: 16px;
-	 display:inline-block;
+	 display: block;
 	 margin-top: 10px;
 	 background-color: #0087d0;
 	 color: white;
