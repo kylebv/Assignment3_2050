@@ -26,7 +26,7 @@
 		</div>
 		
 		
-		<div id=pageContent>
+		<div class="pageContent">
 			<div id=articleList>
 				<div>
 					<c:out value="${article.title}" />
