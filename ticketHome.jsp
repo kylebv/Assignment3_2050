@@ -37,17 +37,15 @@
 		<div class="pageContent">
 			<c:if test="${requestScope.roleID == 'ADMIN'}">
 				<div id=sortingBar> 
-				
 				<div class="addTicketElement">
-					<p> Select Type: </p>
-					<div class="radios">
-							<label class="radioButton"> Network: <input type="radio" name="issueCategory"  value="Network"/></label>
-							<label class="radioButton"> Software: <input type="radio" name="issueCategory" value="Software"/></label>
-							<label class="radioButton"> HardWare: <input type="radio" name="issueCategory" value="Hardware"/></label>
-							<label class="radioButton"> Email: <input type="radio" name="issueCategory" value="Email"/></label>
-							<label class="radioButton"> Account: <input type="radio" name="issueCategory" value="Account"/></label>
-						</div>
-					</div>	
+					<div class="radios"> 
+					<button class="radioButton" onclick="clickHandlerCatBar('network')"> Network </button>
+					<button class="radioButton" onclick="clickHandlerCatBar('software')"> Software </button> 
+					<button class="radioButton" onclick="clickHandlerCatBar('hardware')"> Hardware </button> 				
+					<button class="radioButton" onclick="clickHandlerCatBar('email')"> Email </button> 
+					<button class="radioButton" onclick="clickHandlerCatBar('account')"> Account </button> 				
+				</div>
+				</div>	
 			</div>	
 			</c:if>
 			
