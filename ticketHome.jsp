@@ -61,6 +61,15 @@
 				</div>
 			</div>
 			
+			<div>
+			<c:if test="${requestScope.roleID == 'ADMIN'}">
+				<form name="addNewTicket" action="Controller" method="POST" id="addNewTicket">
+					<input name="page" type="hidden" value="ticketHome" />		
+					<input type="submit" name="newTicket" value="newTicket"/>
+				</form>
+			</c:if>
+			</div>
+			
 		</div>
 		
 		
