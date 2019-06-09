@@ -10,9 +10,9 @@
 	</head>
 	<body>
 	
-		<form name="navigationBar" action="Controller" method="POST">
+		<form name="navigationBarF" action="Controller" method="POST" id="navFormId">
 			<input name="page" type="hidden" value="ticketHome"/>
-			<input name="navigationBar" type="hidden" value="" id="navigationBar"/>
+			<input name="navigationBar" type="hidden" value="" id="navigationBarE"/>
 		</form>
 		
 		
@@ -28,28 +28,28 @@
 		<div class="pageContent">
 			<div id=articleList>
 				<div>
-					<c:out value="${requestScope.ticket.title}">
+					<c:out value="${requestScope.ticket.title}" />
 				</div>
 				<div>
-					<c:out value="${requestScope.ticket.user}">
+					<c:out value="${requestScope.ticket.user}" />
 				</div>
 				<div>
-					<c:out value="${requestScope.ticket.category}">
+					<c:out value="${requestScope.ticket.category}" />
 				</div>
 				<div>
-					<c:out value="${requestScope.ticket.body}">
+					<c:out value="${requestScope.ticket.body}" />
 				</div>
 				<div>
-					<c:out value="${requestScope.ticket.dateCreated}">
+					<c:out value="${requestScope.ticket.dateCreated}" />
 				</div>
 				<div>
-					<c:forEach items="${requestScope.ticket.comment}" var="CommentModel">
+					<c:forEach items="${requestScope.ticket.comment}" var="CommentModel >
 						<div>
 							<div class=body>
-								<c:out value="${CommentModel.body}">
+								<c:out value="${CommentModel.body}" />
 							</div>
 							<div class=user>
-								<c:out value="${CommentModel.user}">
+								<c:out value="${CommentModel.user}" />
 							</div>
 						</div>
 					</c:forEach>
@@ -57,7 +57,7 @@
 				<div>
 					<c:forEach items="${requestScope.ticket.files}" var="FileModel">
 						<div id="${FileModel.fileExtention}">
-							<c:out value="${FileModel.fileExtention}">
+							<c:out value="${FileModel.fileExtention}" />
 						</div>
 					</c:forEach>
 				</div>

@@ -1,25 +1,22 @@
 
-function clickHandlerCatBar(value){
-	var h = document.getElementById("categoryBar");
-	h.categoryBar = value;
-	document.forms["categoryBar"].submit();
+function clickHandlerCatBar(page){
+	document.getElementById("categoryBarE").value = page;
+	document.getElementById("catFormId").submit();
 }
 
-function clickHandlerNavBar(value){
-	var h = document.getElementById("navagationBar");
-	h.navagationBar = value;
-	document.forms["navagationBar"].submit();
+function clickHandlerNavBar(page){
+	document.getElementById("navigationBarE").value = page;
+	document.getElementById("navFormId").submit();
 }
 
-function clickHandlerViewTicket(value){
-	var h = document.getElementById("viewTicket");
-	h.viewTicket = value;
-	document.forms["viewTicket"].submit();
+function clickHandlerViewTicket(page){
+	document.getElementById("viewTicketE").value = page;
+	document.getElementById("viewTicketFormId").submit();
 }
 
-function clickHandlerViewArticle(value){
-	var h = document.getElementById("viewArticle");
-	h.viewArticle = value;
-	document.forms["viewArticle"].submit();
+function clickHandlerViewArticle(page){
+	document.getElementById("viewArticleE").value = page;
+	document.getElementById("viewArticleFormId").submit();
 }
+
 

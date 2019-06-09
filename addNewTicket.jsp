@@ -9,9 +9,9 @@
 		<link href="styles/stylesheet.css" type="text/css" rel="stylesheet"  />
 	</head>
 	<body>
-		<form name="navigationBar" action="Controller" method="POST">
+		<form name="navigationBarF" action="Controller" method="POST" id="navFormId">
 			<input name="page" type="hidden" value="ticketHome"/>
-			<input name="navigationBar" type="hidden" value="" id="navigationBar"/>
+			<input name="navigationBar" type="hidden" value="" id="navigationBarE"/>
 		</form>
 		
 		<div class="pageheader"> 

@@ -10,9 +10,9 @@
 		<link href="styles/stylesheet.css" type="text/css" rel="stylesheet"  />
 	</head>
 	<body>
-		<form name="navigationBar" action="Controller" method="POST">
+		<form name="navigationBarF" action="Controller" method="POST" id="navFormId">
 			<input name="page" type="hidden" value="ticketHome"/>
-			<input name="navigationBar" type="hidden" value="" id="navigationBar"/>
+			<input name="navigationBar" type="hidden" value="" id="navigationBarE"/>
 		</form>
 		
 		
@@ -29,24 +29,24 @@
 		<div id=pageContent>
 			<div id=articleList>
 				<div>
-					<c:out value="${article.title}">
+					<c:out value="${article.title}" />
 				</div>
 				<div>
-					<c:out value="${article.user}">
+					<c:out value="${article.user}" />
 				</div>
 				<div>
-					<c:out value="${article.category}">
+					<c:out value="${article.category}" />
 				</div>
 				<div>
-					<c:out value="${article.body}">
+					<c:out value="${article.body}" />
 				</div>
 				<div>
-					<c:out value="${article.dateCreated}">
+					<c:out value="${article.dateCreated}" />
 				</div>
 				<div>
 					<c:forEach items="${article.files}" var="FileModel">
 						<div id="${FileModel.fileExtention}">
-							<c:out value="${FileModel.fileExtention}">
+							<c:out value="${FileModel.fileExtention}" />
 						</div>
 					</c:forEach>
 				</div>

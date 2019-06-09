@@ -10,20 +10,20 @@
 	<link href="styles/stylesheet.css" type="text/css" rel="stylesheet"  />
 	</head>
 	<body>
-		<form name="navigationBar" action="Controller" method="POST">
+		<form name="navigationBarF" action="Controller" method="POST" id="navFormId">
 			<input name="page" type="hidden" value="ticketHome"/>
-			<input name="navigationBar" type="hidden" value="" id="navigationBar"/>
+			<input name="navigationBar" type="hidden" value="" id="navigationBarE"/>
 		</form>
 		
 		
-		<form name="categoryBar" action="Controller" method="POST" >
-			<input name="page" type="hidden" value="knowledgeBase"/>
-			<input name="categoryBar" type="hidden" value="" id="categoryBar"/>
+		<form name="categoryBarF" action="Controller" method="POST" id="catFormId">>
+			<input name="page" type="hidden" value="ticketHome"/>
+			<input name="categoryBar" type="hidden" value=""  id="categoryBarE"/>
 		</form>
 		
-		<form name="viewArticle" action="Controller" method="POST" >
+		<form name="viewArticleF" action="Controller" method="POST" id="viewArticleFormId">
 			<input name="page" type="hidden" value="knowledgeBase"/>
-			<input name="viewArticle" type="hidden" value="" id="viewArticle"/>
+			<input name="viewArticle" type="hidden" value="" id="viewArticleE"/>
 		</form>
 	
 		<div class="pageheader"> 
@@ -52,7 +52,7 @@
 			<div id=articleList class="radios">
 				    <c:forEach items="${requestScope.articles}" var="KnowledgeBaseArticleModel">
 						<div id="${KnowledgeBaseArticleModel.ticketID}">
-							<c:out value="${KnowledgeBaseArticleModel.title}">
+							<c:out value="${KnowledgeBaseArticleModel.title}" />
 							<button onclick="clickHandlerViewArticle(${KnowledgeBaseArticleModel.ticketID})"class="browseButton"> View Article </button> 
 						</div>
 					</c:forEach>
