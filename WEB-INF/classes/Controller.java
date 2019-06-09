@@ -159,9 +159,8 @@ public class Controller extends HttpServlet {
 				nextJSP = sendLogin(request,session,null);
 			break;
 		}
-		login(request,session,new UserModel("testuser","password","ADMIN"));
-		request.setAttribute("roleID","ADMIN"/*role*/);
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/" + sendTicketHome(request,session,null)/*nextJSP*/);//NEEd TO CHANGE SO WEB INF HOLD JSP
+		request.setAttribute("roleID",role);
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/" + nextJSP);//NEEd TO CHANGE SO WEB INF HOLD JSP
 		dispatcher.forward(request,response);
 		//--------------------------------------------------------------------------
 	} 
@@ -205,7 +204,7 @@ public class Controller extends HttpServlet {
 		List<TicketModel> list = null;
 		if(role.equals("ADMIN")){
 			if(sortType == null) list = QueryClass.getTickets();
-			else list = QueryClass.getTickets/*ByCategory*/(/*sortType*/);
+			else list = QueryClass.getTicketsByCategory(sortType);
 		}else 
 			list = QueryClass.getTicketsByUser(userName);
 		request.setAttribute("tickets",list);

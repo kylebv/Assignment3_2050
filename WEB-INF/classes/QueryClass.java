@@ -46,12 +46,51 @@ public class QueryClass {
         return ticketList;
     }
 
+    //returns all the tickets for displaying as a list
+    public static List<TicketModel> getTicketsByCategory(String category){
+        String query = "SELECT ID, username, categoryID, title, body, dateCreated, statusID FROM Ticket WHERE categoryID = ? order by dateCreated desc;";
+        List<TicketModel> ticketList = new LinkedList<>();
+        try(Connection connection = DBConnector.getConnection(); //step 1
+            PreparedStatement statement = connection.prepareStatement(query); //step 2
+            ){
+            statement.setString(1, category);
+            ResultSet result = statement.executeQuery();//step 3 and 4
+            if(result.next()) {
+                do { //step 5
+                    TicketModel ticket = new TicketModel();
+                    // you should be validating the following,
+                    // this is just an example to get you started
+                    ticket.setUser(result.getString("username"));
+                    ticket.setTicketID(result.getInt("ID"));
+                    ticket.setCategory(result.getString("categoryID"));
+                    ticket.setDateCreated(result.getDate("dateCreated"));
+                    ticket.setBody(result.getString("body"));
+                    ticket.setTitle((result.getString("title")));
+                    ticket.setStatus(result.getString("statusID"));
+                    ticketList.add(ticket);
+                }
+                while (result.next());
+            }
+            connection.close();
+        }
+        catch(SQLException e){
+            System.err.println(e.getMessage());
+            System.err.println(e.getStackTrace());
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
+        return ticketList;
+    }
+
     //updates a ticket's status
     public static void setTicketStatus(int _ticketID, String _status){
-        String query = "UPDATE Ticket SET statusID = '"+_status+"' WHERE ID = "+_ticketID;
+        String query = "UPDATE Ticket SET statusID = ? WHERE ID = ?;";
         try(Connection connection = DBConnector.getConnection(); //step 1
-            Statement statement = connection.createStatement(); //step 2
-            ResultSet result = statement.executeQuery(query);){ //step 3 and 4
+            PreparedStatement statement = connection.prepareStatement(query); //step 2
+            ){
+            statement.setString(1, _status);
+            statement.setInt(2, _ticketID);
+            ResultSet result = statement.executeQuery();//step 3 and 4
             connection.close();
         }
         catch(SQLException e){
@@ -65,10 +104,14 @@ public class QueryClass {
     //inserts a new comment into a ticket
     public static void addComment(CommentModel cm)
     {
-        String query = "INSERT INTO TicketComment (ticketID, body, dateCreated, username) VALUES ("+cm.getTicketID()+", '"+cm.getBody()+"', NOW(), '"+cm.getUser()+"');";
+        String query = "INSERT INTO TicketComment (ticketID, body, dateCreated, username) VALUES (?, ?, NOW(), ?);";
         try(Connection connection = DBConnector.getConnection(); //step 1
-            Statement statement = connection.createStatement(); //step 2
-            ResultSet result = statement.executeQuery(query);) {
+            PreparedStatement statement = connection.prepareStatement(query); //step 2
+            ) {
+            statement.setInt(1,cm.getTicketID());
+            statement.setString(2,cm.getBody());
+            statement.setString(3,cm.getUser());
+            ResultSet result = statement.executeQuery();
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,10 +121,15 @@ public class QueryClass {
     //inserts a new ticket
     public static void addTicket(String username, String title, String body, String category, List<String> filePaths)
     {
-        String query = "INSERT INTO Ticket (username, title, body, category, dateCreated) VALUES ('"+username+"', '"+title+"', '"+body+"', '"+category+"', NOW());";
+        String query = "INSERT INTO Ticket (username, title, body, category, dateCreated) VALUES (?, ?, ?, ?, NOW());";
         try(Connection connection = DBConnector.getConnection(); //step 1
-            Statement statement = connection.createStatement(); //step 2
-            ResultSet result = statement.executeQuery(query);) {
+            PreparedStatement statement = connection.prepareStatement(query); //step 2
+        ) {
+            statement.setString(1,username);
+            statement.setString(2,title);
+            statement.setString(3, body);
+            statement.setString(4, category);
+            ResultSet result = statement.executeQuery();
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,6 +149,7 @@ public class QueryClass {
             addFile(ticketID, s);
         }
     }
+
 
     //adds a file to the database for a said ticket
     public static void addFile(int ticketID, String filePath)
@@ -129,11 +178,13 @@ public class QueryClass {
 
     //gets a list of all the tickets by a certain user
     public static List<TicketModel> getTicketsByUser(String username){
-        String query = "SELECT ID, username, categoryID, title, body, dateCreated, statusID FROM Ticket where username = '"+username+"' order by dateCreated desc;";
+        String query = "SELECT ID, username, categoryID, title, body, dateCreated, statusID FROM Ticket where username = ? order by dateCreated desc;";
         List<TicketModel> ticketList = new LinkedList<>();
         try(Connection connection = DBConnector.getConnection(); //step 1
-            Statement statement = connection.createStatement(); //step 2
-            ResultSet result = statement.executeQuery(query);){ //step 3 and 4
+            PreparedStatement statement = connection.prepareStatement(query); //step 2
+            ){
+            statement.setString(1, username);
+            ResultSet result = statement.executeQuery();//step 3 and 4
             if(result.next()) {
                  do { //step 5
                     TicketModel ticket = new TicketModel();
@@ -196,11 +247,13 @@ public class QueryClass {
 
     //gets all the articles by category to display as a list
     public static List<KnowledgeBaseArticleModel> getArticlesByCategory(String category){
-        String query = "SELECT ID, username, categoryID, title, body, dateCreated FROM KnowledgeBaseArticle where categoryID = '"+category+"' order by dateCreated desc;";
+        String query = "SELECT ID, username, categoryID, title, body, dateCreated FROM KnowledgeBaseArticle where categoryID = ? order by dateCreated desc;";
         List<KnowledgeBaseArticleModel> articleList = new LinkedList<>();
         try(Connection connection = DBConnector.getConnection(); //step 1
-            Statement statement = connection.createStatement(); //step 2
-            ResultSet result = statement.executeQuery(query);){ //step 3 and 4
+            PreparedStatement statement = connection.prepareStatement(query); //step 2
+            ){
+            statement.setString(1, category);
+            ResultSet result = statement.executeQuery();//step 3 and 4
             if(result.next()) {
                  do { //step 5
                     KnowledgeBaseArticleModel article = new KnowledgeBaseArticleModel();
@@ -253,19 +306,23 @@ public class QueryClass {
 
     //grabs a file out of the database, based on the file id
     public static void getFile(int fileID){
-        String query = "SELECT ID, fileName, fileData FROM TicketFile where ID = "+fileID+" and isDeleted = 0;";
+        String query = "SELECT ID, fileName, fileData FROM TicketFile where ID = ? and isDeleted = 0;";
         File f;
         try(Connection connection = DBConnector.getConnection(); //step 1
-            Statement statement = connection.createStatement(); //step 2
-            ResultSet result = statement.executeQuery(query);){
-            f = new File(result.getString("fileName"));
-            FileOutputStream output = new FileOutputStream(f);//step 3 and 4
-            InputStream input = result.getBinaryStream("fileData");
-            byte[] buffer = new byte[1024];
-            while (input.read(buffer) > 0) {
-                output.write(buffer);
+            PreparedStatement statement = connection.prepareStatement(query); //step 2
+            ){
+            statement.setInt(1,fileID);
+            ResultSet result = statement.executeQuery();
+            if(result.next()) {
+                    f = new File(result.getString("fileName"));
+                    FileOutputStream output = new FileOutputStream(f);//step 3 and 4
+                    InputStream input = result.getBinaryStream("fileData");
+                    byte[] buffer = new byte[1024];
+                    while (input.read(buffer) > 0) {
+                        output.write(buffer);
+                    }
+                connection.close();
             }
-            connection.close();
         }
         catch(SQLException e){
             System.err.println(e.getMessage());
@@ -277,11 +334,13 @@ public class QueryClass {
 
     //sets the file as deleted in the db (as a flag)
     public static void deleteFile(int fileID){
-        String query = "UPDATE TicketFile SET isDeleted = 1 where ID = "+fileID+";";
+        String query = "UPDATE TicketFile SET isDeleted = 1 where ID = ?;";
         int del = 0;
         try(Connection connection = DBConnector.getConnection(); //step 1
-            Statement statement = connection.createStatement(); //step 2
-            ResultSet result = statement.executeQuery(query);){
+            PreparedStatement statement = connection.prepareStatement(query); //step 2
+            ){
+            statement.setInt(1,fileID);
+            ResultSet result = statement.executeQuery();
             connection.close();
         }
         catch(SQLException e){
@@ -294,11 +353,13 @@ public class QueryClass {
 
     //gets all the comments from a ticket, usually a helper method for getting a ticket
     public static List<CommentModel> getComments(int ticketID){
-        String query = "SELECT ID, username, body, ticketID, dateCreated FROM TicketComment WHERE ticketID = "+ticketID+" ORDER BY dateCreated ASC;";
+        String query = "SELECT ID, username, body, ticketID, dateCreated FROM TicketComment WHERE ticketID = ? ORDER BY dateCreated ASC;";
         List<CommentModel> comments = new LinkedList<>();
         try(Connection connection = DBConnector.getConnection(); //step 1
-            Statement statement = connection.createStatement(); //step 2
-            ResultSet result = statement.executeQuery(query);){ //step 3 and 4
+            PreparedStatement statement = connection.prepareStatement(query); //step 2
+            ){
+            statement.setInt(1,ticketID);
+            ResultSet result = statement.executeQuery();//step 3 and 4
             if(result.next()) {
                  do { //step 5
                      CommentModel comment = new CommentModel();
@@ -324,11 +385,13 @@ public class QueryClass {
 
     //gets all the files from a ticket, usually a helper method for get ticket
     public static List<FileModel> getFiles(int ticketID){
-        String query = "SELECT ID, fileName FROM TicketFie where isDeleted = 0 and ticketID = "+ticketID+";";
+        String query = "SELECT ID, fileName FROM TicketFie where isDeleted = 0 and ticketID = ?;";
         List<FileModel> files = new LinkedList<>();
         try(Connection connection = DBConnector.getConnection(); //step 1
-            Statement statement = connection.createStatement(); //step 2
-            ResultSet result = statement.executeQuery(query);){ //step 3 and 4
+            PreparedStatement statement = connection.prepareStatement(query); //step 2
+            ){
+            statement.setInt(1, ticketID);
+            ResultSet result = statement.executeQuery();//step 3 and 4
             if(result.next()) {
                 do { //step 5
                     FileModel file = new FileModel();
@@ -353,20 +416,24 @@ public class QueryClass {
 
     //returns a ticket and populates all the files and comments for a ticket
     public static TicketModel getTicket(int ticketID){
-        String query = "SELECT ID, username, categoryID, title, body, dateCreated, statusID FROM Ticket WHERE ID = "+ticketID+";";
+        String query = "SELECT ID, username, categoryID, title, body, dateCreated, statusID FROM Ticket WHERE ID = ?;";
         TicketModel ticket = new TicketModel();
         try(Connection connection = DBConnector.getConnection(); //step 1
-            Statement statement = connection.createStatement(); //step 2
-            ResultSet result = statement.executeQuery(query);){ //step 3 and 4
-            // you should be validating the following,
-            // this is just an example to get you started
-            ticket.setUser(result.getString("username"));
-            ticket.setTicketID(result.getInt("ID"));
-            ticket.setCategory(result.getString("categoryID"));
-            ticket.setDateCreated(result.getDate("dateCreated"));
-            ticket.setBody(result.getString("body"));
-            ticket.setTitle((result.getString("title")));
-            ticket.setStatus(result.getString("status"));
+            PreparedStatement statement = connection.prepareStatement(query); //step 2
+            ){
+            statement.setInt(1,ticketID);
+            ResultSet result = statement.executeQuery();//step 3 and 4
+            if(result.next()) {
+                // you should be validating the following,
+                // this is just an example to get you started
+                ticket.setUser(result.getString("username"));
+                ticket.setTicketID(result.getInt("ID"));
+                ticket.setCategory(result.getString("categoryID"));
+                ticket.setDateCreated(result.getDate("dateCreated"));
+                ticket.setBody(result.getString("body"));
+                ticket.setTitle((result.getString("title")));
+                ticket.setStatus(result.getString("status"));
+            }
             connection.close();
         }
         catch(SQLException e){
@@ -382,20 +449,24 @@ public class QueryClass {
 
     //returns a ticket and populates all the files and comments for a ticket
     public static KnowledgeBaseArticleModel getArticle(int articleID){
-        String query = "SELECT ID, username, categoryID, title, body, dateCreated FROM KnowledgeBaseArticle WHERE ID = "+articleID+";";
+        String query = "SELECT ID, username, categoryID, title, body, dateCreated FROM KnowledgeBaseArticle WHERE ID = ?;";
         KnowledgeBaseArticleModel article = new KnowledgeBaseArticleModel();
         try(Connection connection = DBConnector.getConnection(); //step 1
-            Statement statement = connection.createStatement(); //step 2
-            ResultSet result = statement.executeQuery(query);){ //step 3 and 4
-            // you should be validating the following,
-            // this is just an example to get you started
-            article.setUser(result.getString("username"));
-            article.setTicketID(result.getInt("ticketID"));
-            article.setCategory(result.getString("categoryID"));
-            article.setDateCreated(result.getDate("dateCreated"));
-            article.setBody(result.getString("body"));
-            article.setTitle((result.getString("title")));
-            article.setArticleID(result.getInt("ID"));
+            PreparedStatement statement = connection.prepareStatement(query); //step 2
+            ){
+            statement.setInt(1,articleID);
+            ResultSet result = statement.executeQuery();//step 3 and 4
+            if(result.next()) {
+                // you should be validating the following,
+                // this is just an example to get you started
+                article.setUser(result.getString("username"));
+                article.setTicketID(result.getInt("ticketID"));
+                article.setCategory(result.getString("categoryID"));
+                article.setDateCreated(result.getDate("dateCreated"));
+                article.setBody(result.getString("body"));
+                article.setTitle((result.getString("title")));
+
+            }
             connection.close();
         }
         catch(SQLException e){
@@ -409,15 +480,20 @@ public class QueryClass {
     }
 
     public static UserModel getUser(String username, String password){
-        String query = "SELECT username, password FROM User WHERE username = '"+username+"' AND password = '"+password+"'";
+        String query = "SELECT username, password FROM User WHERE username = ? AND password = ?;";
         UserModel user = new UserModel();
         try(Connection connection = DBConnector.getConnection(); //step 1
-            Statement statement = connection.createStatement(); //step 2
-            ResultSet result = statement.executeQuery(query);){ //step 3 and 4
-            // you should be validating the following,
-            // this is just an example to get you started
-            user.setPassword(result.getString("password"));
-            user.setUsername(result.getString("username"));
+            PreparedStatement statement = connection.prepareStatement(query); //step 2
+            ){
+            statement.setString(1,username);
+            statement.setString(2,password);
+            ResultSet result = statement.executeQuery();//step 3 and 4
+            if(result.next()) {
+                // you should be validating the following,
+                // this is just an example to get you started
+                user.setPassword(result.getString("password"));
+                user.setUsername(result.getString("username"));
+            }
             connection.close();
         }
         catch(SQLException e){
@@ -426,13 +502,17 @@ public class QueryClass {
         } catch (NamingException e) {
             e.printStackTrace();
         }
-        query = "SELECT username, roleID FROM UserRole WHERE username = '"+username+"'";
+        query = "SELECT username, roleID FROM UserRole WHERE username = ?;";
         try(Connection connection = DBConnector.getConnection(); //step 1
-            Statement statement = connection.createStatement(); //step 2
-            ResultSet result = statement.executeQuery(query);){ //step 3 and 4
-            // you should be validating the following,
-            // this is just an example to get you started
-            user.setRole(result.getString("roleID"));
+            PreparedStatement statement = connection.prepareStatement(query); //step 2
+            ){
+            statement.setString(1,username);
+            ResultSet result = statement.executeQuery();//step 3 and 4
+            if(result.next()) {
+                // you should be validating the following,
+                // this is just an example to get you started
+                user.setRole(result.getString("roleID"));
+            }
             connection.close();
         }
         catch(SQLException e){
@@ -444,15 +524,19 @@ public class QueryClass {
         return user;
     }
     public static UserModel getUser(String username){
-        String query = "SELECT username, password FROM User WHERE username = '"+username+"';";
+        String query = "SELECT username, password FROM User WHERE username = ?;";
         UserModel user = new UserModel();
         try(Connection connection = DBConnector.getConnection(); //step 1
-            Statement statement = connection.createStatement(); //step 2
-            ResultSet result = statement.executeQuery(query);){ //step 3 and 4
-            // you should be validating the following,
-            // this is just an example to get you started
-            user.setPassword(result.getString("password"));
-            user.setUsername(result.getString("username"));
+            PreparedStatement statement = connection.prepareStatement(query); //step 2
+            ){
+            statement.setString(1,username);
+            ResultSet result = statement.executeQuery();//step 3 and 4
+            if(result.next()) {
+                // you should be validating the following,
+                // this is just an example to get you started
+                user.setPassword(result.getString("password"));
+                user.setUsername(result.getString("username"));
+            }
             connection.close();
         }
         catch(SQLException e){
@@ -461,13 +545,15 @@ public class QueryClass {
         } catch (NamingException e) {
             e.printStackTrace();
         }
-        query = "SELECT username, roleID FROM UserRole WHERE username = '"+username+"';";
+        query = "SELECT username, roleID FROM UserRole WHERE username = ?;";
         try(Connection connection = DBConnector.getConnection(); //step 1
-            Statement statement = connection.createStatement(); //step 2
-            ResultSet result = statement.executeQuery(query);){ //step 3 and 4
-            // you should be validating the following,
-            // this is just an example to get you started
-            user.setRole(result.getString("roleID"));
+            PreparedStatement statement = connection.prepareStatement(query); //step 2
+            ){
+            statement.setString(1,username);
+            ResultSet result = statement.executeQuery();
+            if(result.next()) {
+                user.setRole(result.getString("roleID"));
+            }
             connection.close();
         }
         catch(SQLException e){
@@ -493,10 +579,16 @@ public class QueryClass {
             article.setBody(article.getBody()+"<br>"+c.getUser()+"<br>"+c.getBody());
         }
         String query = "INSERT INTO KnowledgeBaseArticle (username, ticketID, categoryID, title, body, dateCreated) " +
-                "VALUES ('"+article.getUser()+"', "+article.getTicketID()+", '"+article.getCategory()+"', '"+article.getTitle()+"', '"+article.getBody()+"', NOW())";
+                "VALUES (?, ?, ?, ?, ?, ?, NOW())";
         try(Connection connection = DBConnector.getConnection(); //step 1
-            Statement statement = connection.createStatement(); //step 2
-            ResultSet result = statement.executeQuery(query);){ //step 3 and 4
+            PreparedStatement statement = connection.prepareStatement(query); //step 2
+            ){
+            statement.setString(1,article.getUser());
+            statement.setInt(2, article.getTicketID());
+            statement.setString(3, article.getCategory());
+            statement.setString(4, article.getTitle());
+            statement.setString(5, article.getBody());
+            ResultSet result = statement.executeQuery();//step 3 and 4
             connection.close();
         }
         catch(SQLException e){
