@@ -12,7 +12,7 @@ public class Controller extends HttpServlet {
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/" + sendLogin(request,session,null));//NEEd TO CHANGE SO WEB INF HOLD JSP
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/" + sendLogin(request,session,null));//NEEd TO CHANGE SO WEB INF HOLD JSP
 		dispatcher.forward(request,response);
 	}
 	
@@ -109,7 +109,7 @@ public class Controller extends HttpServlet {
 							}
 							nextJSP = sendTicketView(request,session,viewTicket);
 						}else if(toArticle != null){
-							if( role.equals("ADMIN") && ticket.getStatus().equals("resolved")){
+							if( role.equals("ADMIN") && ticket.getStatus().equals("Resolved")){
 								QueryClass.createArticle(Integer.parseInt(viewTicket));
 								nextJSP = sendTicketHome(request,session,null);
 							}else{
@@ -179,7 +179,7 @@ public class Controller extends HttpServlet {
 			break;
 		}
 		request.setAttribute("roleID",role);
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/" + nextJSP);//NEEd TO CHANGE SO WEB INF HOLD JSP
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/" + nextJSP);//NEEd TO CHANGE SO WEB INF HOLD JSP
 		dispatcher.forward(request,response);
 		//--------------------------------------------------------------------------
 	} 
@@ -248,7 +248,7 @@ public class Controller extends HttpServlet {
 	private String sendArticle(HttpServletRequest request, HttpSession session, String id){
 		int ID = Integer.parseInt(id);
 		request.setAttribute("article",QueryClass.getArticle(ID));
-		request.setAttribute("files",QueryClass.getFiles(ID));
+		request.setAttribute("files",QueryClass.getFiles(QueryClass.getArticle(ID).getTicketID()));
 		return "article.jsp";
 	}
 	

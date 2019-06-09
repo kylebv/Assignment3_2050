@@ -123,7 +123,7 @@ public class QueryClass {
     //inserts a new ticket
     public static void addTicket(String username, String title, String body, String category)
     {
-        String query = "INSERT INTO Ticket (username, title, body, categoryID, dateCreated) VALUES (?, ?, ?, ?, NOW());";
+        String query = "INSERT INTO Ticket (username, title, body, categoryID, dateCreated, statusID) VALUES (?, ?, ?, ?, NOW(), ?);";
         try(Connection connection = DBConnector.getConnection(); //step 1
             PreparedStatement statement = connection.prepareStatement(query); //step 2
         ) {
@@ -131,6 +131,7 @@ public class QueryClass {
             statement.setString(2,title);
             statement.setString(3, body);
             statement.setString(4, category);
+			statement.setString(5, "New");
             statement.executeUpdate();
             connection.close();
         } catch (Exception e) {
@@ -142,22 +143,23 @@ public class QueryClass {
     //adds a file to the database for a said ticket
     public static void addFile(int ticketID, Part filePart)
     {
-
-        try {
-            Connection connection = DBConnector.getConnection();
-            InputStream input = filePart.getInputStream();
-            String updateSQL = "insert into TicketFile (ticketID, fileExtension, fileData, isDeleted) values (?, ?, ?, 0); ";
-            String fileName = filePart.getSubmittedFileName();
-            PreparedStatement pstmt = connection.prepareStatement(updateSQL);
-            pstmt.setBinaryStream(3, input);
-            pstmt.setInt(1, ticketID);
-            pstmt.setString(2, fileName);
-            pstmt.executeUpdate();
-            connection.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+		if(filePart.getSubmittedFileName()!=null||!filePart.getSubmittedFileName().equals("")){
+			try {
+				Connection connection = DBConnector.getConnection();
+				InputStream input = filePart.getInputStream();
+				String updateSQL = "insert into TicketFile (ticketID, fileExtension, fileData, isDeleted) values (?, ?, ?, 0); ";
+				String fileName = filePart.getSubmittedFileName();
+				PreparedStatement pstmt = connection.prepareStatement(updateSQL);
+				pstmt.setBinaryStream(3, input);
+				pstmt.setInt(1, ticketID);
+				pstmt.setString(2, fileName);
+				pstmt.executeUpdate();
+				connection.close();
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
     }
 
     //gets a list of all the tickets by a certain user
@@ -198,7 +200,7 @@ public class QueryClass {
 
     //gets all the articles to display as a list
     public static List<KnowledgeBaseArticleModel> getArticles(){
-        String query = "SELECT ID, username, categoryID, title, body, dateCreated FROM KnowledgeBaseArticle order by dateCreated desc;";
+        String query = "SELECT ID, username, categoryID, title, body, dateCreated, ticketID FROM KnowledgeBaseArticle order by dateCreated desc;";
         List<KnowledgeBaseArticleModel> articleList = new LinkedList<>();
         try(Connection connection = DBConnector.getConnection(); //step 1
             Statement statement = connection.createStatement(); //step 2
@@ -209,7 +211,8 @@ public class QueryClass {
                     // you should be validating the following,
                     // this is just an example to get you started
                     article.setUser(result.getString("username"));
-                    article.setTicketID(result.getInt("ID"));
+                    article.setTicketID(result.getInt("ticketID"));
+					article.setArticleID(result.getInt("ID"));
                     article.setCategory(result.getString("categoryID"));
                     article.setDateCreated(result.getDate("dateCreated"));
                     article.setBody(result.getString("body"));
@@ -559,10 +562,18 @@ public class QueryClass {
         article.setCategory(ticket.getCategory());
         article.setDateCreated(new Date());
         article.setTitle(ticket.getTitle());
-        article.setTicketID(ticket.getTicketID());
+        article.setTicketID(ticketID);
+		article.setUser(ticket.getUser());
         for (CommentModel c : ticket.getComments())
         {
-            article.setBody(article.getBody()+"<br>"+c.getUser()+"<br>"+c.getBody());
+			if(article.getBody()==null||article.getBody().equals(""))
+			{
+				article.setBody("User: "+c.getUser()+" Comment: "+c.getBody());
+			}
+			else
+			{
+				article.setBody(article.getBody()+" User: "+c.getUser()+" Comment: "+c.getBody());
+			}
         }
         String query = "INSERT INTO KnowledgeBaseArticle (username, ticketID, categoryID, title, body, dateCreated) " +
                 "VALUES (?, ?, ?, ?, ?, NOW());";
