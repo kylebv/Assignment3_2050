@@ -4,7 +4,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>Login Page</title>
+		<title>Ticket View</title>
 		<script src="JavaScriptLibrary.js"></script>
 		<link href="styles/stylesheet.css" type="text/css" rel="stylesheet"  />
 	</head>

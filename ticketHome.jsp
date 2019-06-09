@@ -5,7 +5,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>Login Page</title>
+		<title>Ticket Home</title>
 		<script src="JavaScriptLibrary.js"></script>
 		<link href="styles/stylesheet.css" type="text/css" rel="stylesheet"  />
 	</head>
@@ -62,7 +62,7 @@
 			</div>
 			
 			<div>
-			<c:if test="${requestScope.roleID == 'ADMIN'}">
+			<c:if test="${requestScope.roleID == 'USER'}">
 				<form name="addNewTicket" action="Controller" method="POST" id="addNewTicket">
 					<input name="page" type="hidden" value="ticketHome" />		
 					<input type="submit" name="newTicket" value="newTicket"/>
