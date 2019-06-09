@@ -27,39 +27,49 @@
 			</div>
 		</div>
 		
-		<div class="pageContent">
+		<div class="ticketContent">
+		<div class="addTicketElement"><h2 class="ticketLabel">User Ticket</h2></div><hr>
 			<div id=articleList>
-				<div>
-					<c:out value="${requestScope.ticket.title}" />
+				<div class="viewTicketElement">
+					<p class="ticketLabel">Ticket Name:</p>
+					<div class= "cOut"><c:out value="${requestScope.ticket.title}" /></div>
 				</div>
-				<div>
-					<c:out value="${requestScope.ticket.user}" />
+				<div class="viewTicketElement">
+					<p class="ticketLabel">User:</p>
+					<div class= "cOut"><c:out value="${requestScope.ticket.user}" /></div>
 				</div>
-				<div>
-					<c:out value="${requestScope.ticket.category}" />
+				<div class="viewTicketElement">
+					<p class="ticketLabel">Issue Category:</p>
+					<div class= "cOut"><c:out  value="${requestScope.ticket.category}" /></div>
 				</div>
-				<div>
-					<c:out value="${requestScope.ticket.body}" />
+				<div class="viewTicketElement">
+					<p class="ticketLabel">Description:</p>
+					<div class= "cOut"><c:out value="${requestScope.ticket.body}" /></div>
 				</div>
-				<div>
-					<c:out value="${requestScope.ticket.dateCreated}" />
+				<div class="viewTicketElement">
+					<p class="ticketLabel">Date Created:</p>
+					<div class= "cOut"><c:out value="${requestScope.ticket.dateCreated}" /></div>
 				</div>
+				<hr>
 				<div>
 					<c:forEach items="${requestScope.Comments}" var="CommentModel" >
 						<div>
-							<div class=body>
-								<c:out value="${CommentModel.body}" />
+							<div class="viewTicketElement">
+								<p class="ticketLabel">Comment added:</p>
+								<div class= "cOut"><c:out value="${CommentModel.body}" /></div>
 							</div>
-							<div class=user>
-								<c:out value="${CommentModel.user}" />
+							<div class="viewTicketElement">
+								<p class="ticketLabel">Comment By:</p>
+								<div class= "cOut"><c:out value="${CommentModel.user}" /></div>
 							</div>
 						</div>
+						<br>
 					</c:forEach>
 				</div>
-				<div>
+				<div class="viewTicketElement">
 					<c:forEach items="${requestScope.ticket.files}" var="FileModel">
 						<div id="${FileModel.fileName}">
-							<c:out value="${FileModel.fileName}" />
+							<div class= "cOut"><c:out value="${FileModel.fileName}" /></div>
 						</div>
 					</c:forEach>
 				</div>
@@ -70,8 +80,8 @@
 						
 						<c:when test="${requestScope.roleID =='ADMIN'}">
 							<form name="updateTicket" action="Controller" method="POST" id="updateTicket">
-								<div class="addTicketElement">	
-									<p class="firstInputs">Comment:</p><textarea  id="issueCommentTitle" name="issueCommentTitle"></textarea>
+								<div class="viewTicketElement">	
+									<p class="ticketLabel">Comment:</p><textarea  id="issueCommentTitle" name="issueCommentTitle"></textarea>
 									<div class="radios">
 										<label class="submitButton"> In Progress <input type="radio" name="issueStatus"  value="inProgress"/></label>
 										<label class="submitButton"> Completed <input type="radio" name="issueStatus" value="completed"/></label>
@@ -85,8 +95,8 @@
 						
 						<c:when test="${requestScope.roleID =='USER' && requestScope.ticket.status=='Completed'}"> 
 							<form name="updateTicket" action="Controller" method="POST" id="updateTicket">
-								<div class="addTicketElement">	
-									<p class="firstInputs">Comment:</p><textarea  id="issueCommentBody" name="issueCommentBody"></textarea>
+								<div class="viewTicketElement">	
+									<p class="ticketLabel">Comment:</p><textarea  id="issueCommentBody" name="issueCommentBody"></textarea>
 									<div class="radios">
 										<label class="submitButton"> Reject Solution <input type="radio" name="issueStatus"  value="inProgress"/></label>
 										<label class="submitButton"> Accept Solution <input type="radio" name="issueStatus" value="resolved"/></label>	
@@ -100,8 +110,8 @@
 						
 						<c:when test="${requestScope.roleID =='USER'}"> 
 							<form name="updateTicket" action="Controller" method="POST" id="updateTicket">
-								<div class="addTicketElement">	
-									<p class="firstInputs">Comment:</p><textarea  id="issueCommentBody" name="issueCommentBody"></textarea>
+								<div class="viewTicketElement">	
+									<p class="ticketLabel">Comment:</p><textarea  id="issueCommentBody" name="issueCommentBody"></textarea>
 								</div>
 								<input name="page" type="hidden" value="ticketView"/>
 								<input name="viewTicket" type="hidden" value="${ticket.ticketID}"/>
