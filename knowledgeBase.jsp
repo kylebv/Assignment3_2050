@@ -11,13 +11,13 @@
 	</head>
 	<body>
 		<form name="navigationBarF" action="Controller" method="POST" id="navFormId">
-			<input name="page" type="hidden" value="ticketHome"/>
+			<input name="page" type="hidden" value="knowledgeBase"/>
 			<input name="navigationBar" type="hidden" value="" id="navigationBarE"/>
 		</form>
 		
 		
 		<form name="categoryBarF" action="Controller" method="POST" id="catFormId">>
-			<input name="page" type="hidden" value="ticketHome"/>
+			<input name="page" type="hidden" value="knowledgeBase"/>
 			<input name="categoryBar" type="hidden" value=""  id="categoryBarE"/>
 		</form>
 		
