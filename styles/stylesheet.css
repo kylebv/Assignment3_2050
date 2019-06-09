@@ -21,6 +21,24 @@ h1 {
 	text-align: center;
 	
 }
+h2 {
+	font-family: proxima nova, Arial, Helvetica, sans-serif;
+	font-size: 30px;
+	font-weight: lighter;
+	color: black;
+	margin: auto;
+	
+}
+.cOut {
+	background-color: #0087d0;
+	border: 2px solid;
+	border-radius: 5px;
+	width: 300px;
+	padding: 5px;
+	float: right;
+	
+	
+}
 hr {
 	width: 90%;
 	color: #777;
@@ -32,6 +50,20 @@ hr {
 	margin-bottom: 150px;
 	height: auto;
 	width: 800px;
+	background-color: rgba(255,255,255,0.9);
+	font-family: proxima nova, Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	font-weight: lighter;
+	border: 2px solid;
+	border-radius: 5px;
+	color: #777;
+}
+.ticketContent {
+	margin: auto;
+	margin-top: 180px;
+	margin-bottom: 150px;
+	height: auto;
+	width: 700px;
 	background-color: rgba(255,255,255,0.9);
 	font-family: proxima nova, Arial, Helvetica, sans-serif;
 	font-size: 20px;
@@ -54,7 +86,6 @@ hr {
 	
 	
 	color: black;
-	width: 750px;
 	margin: auto;
 	margin-top: 10px;
 	margin-bottom: 10px;
@@ -64,6 +95,20 @@ hr {
 	display: block;
 	padding: 10px;
 	text-align: center;
+	
+}
+.viewTicketElement {
+	
+	
+	color: black;
+	margin: auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	height: auto;
+	font-family: proxima nova, Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	display: block;
+	padding: 10px;
 	
 }
 .submitElement {
@@ -103,12 +148,21 @@ hr {
 	display: block;
 	margin: 5px;
 }
+.ticketLabel {
+	position: relative;
+	left: 0;
+	text-align: left;
+	display: inline;
+	padding: 5px;
+	
+}
 .radios {
 	margin: 5px;
 	text-align: center;
 }
 #logo {
 	margin-top: 5%;
+	
 }
 #logoSml {
 	margin: auto;
