@@ -50,7 +50,9 @@
 					<p class="ticketLabel">Date Created:</p>
 					<div class= "cOut"><c:out value="${requestScope.ticket.dateCreated}" /></div>
 				</div>
+				<br>
 				<hr>
+				<div class="addTicketElement"><h3 class="ticketLabel">Ticket Comments</h3></div>
 				<div>
 					<c:forEach items="${requestScope.Comments}" var="CommentModel" >
 						<div>
@@ -90,7 +92,7 @@
 						<c:when test="${requestScope.roleID =='USER' && requestScope.ticket.status=='Completed'}"> 
 							<form name="updateTicket" action="Controller" method="POST" id="updateTicket">
 								<div class="viewTicketElement">	
-									<p class="ticketLabel">Comment:</p><textarea  id="issueCommentBody" name="issueCommentBody"></textarea>
+									<p class="ticketLabel">Add Comment:</p><textarea  id="issueCommentBody" name="issueCommentBody"></textarea>
 									<div class="radios">
 										<label class="submitButton"> Reject Solution <input type="radio" name="issueStatus"  value="inProgress"/></label>
 										<label class="submitButton"> Accept Solution <input type="radio" name="issueStatus" value="resolved"/></label>	
