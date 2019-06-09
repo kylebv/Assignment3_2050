@@ -159,14 +159,16 @@ public class Controller extends HttpServlet {
 				nextJSP = sendLogin(request,session,null);
 			break;
 		}
-		request.setAttribute("roleID",role);
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/" + nextJSP);//NEEd TO CHANGE SO WEB INF HOLD JSP
+		login(request,session,new UserModel("testuser","password","ADMIN"));
+		request.setAttribute("roleID","ADMIN"/*role*/);
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/" + sendTicketHome(request,session,null)/*nextJSP*/);//NEEd TO CHANGE SO WEB INF HOLD JSP
 		dispatcher.forward(request,response);
 		//--------------------------------------------------------------------------
 	} 
 	
 	private String navigationBarCheck(HttpServletRequest request, HttpSession session){
 		String nvgbar = request.getParameter("navigationBar");
+		if(nvgbar == null)return null;
 		switch(nvgbar){
 			case "tickets": return sendTicketHome(request,session,null);
 			case "knowledgeBase": return sendKnowledgeBase(request,session,null);
