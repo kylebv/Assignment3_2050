@@ -46,9 +46,11 @@
 					</div>
 				</div>
 				<div class="addTicketElement">	
-					<p class="firstInputs">Upload Files:</p><input type="file" name ="file1" class="fileUpload" value="file upload"/>
-					<input type="file" name ="file2" class="fileUpload" value="file upload"/>
-					<input type="file" name ="file3" class="fileUpload" value="file upload"/>
+					<div class="addFiles">
+						<p class="firstInputs">Upload Files:</p><input type="file" name ="file1" class="fileUpload" value="file upload"/>
+						<input type="file" name ="file2" class="fileUpload" value="file upload"/>
+						<input type="file" name ="file3" class="fileUpload" value="file upload"/>
+					</div>
 				</div>
 				<hr>
 				<input name="page" type="hidden" value="addNewTicket"/>
