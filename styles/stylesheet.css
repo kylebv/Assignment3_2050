@@ -28,7 +28,7 @@ hr {
 }
 .pageContent {
 	margin: auto;
-	margin-top: 220px;
+	margin-top: 180px;
 	margin-bottom: 150px;
 	height: auto;
 	width: 800px;
@@ -63,6 +63,7 @@ hr {
 	font-size: 20px;
 	display: block;
 	padding: 10px;
+	text-align: center;
 	
 }
 .submitElement {
@@ -115,7 +116,7 @@ hr {
 }
 #loginForm {
 	margin: auto;
-	margin-top: 220px;
+	margin-top: 180px;
 	height: auto;
 	width: 320px;
 	background-color: rgba(255,255,255,0.9);
