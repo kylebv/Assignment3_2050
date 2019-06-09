@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -24,7 +23,7 @@
 			</div>
 		</div>
 		
-		<div id=pageContent>
+		<div class="pageContent">
 			<div id=articleList>
 				<div>
 					<c:out value="${requestScope.ticket.title}">
@@ -61,43 +60,38 @@
 					</c:forEach>
 				</div>
 				<div>
-					<c:if test="${requestSession.roleID} == 'ADMIN' && ${requestScope.ticket.Status}=='resolved'">
-						<form name="toArticle" action="Controller" method="POST" id="toArticle">
-							<input name="page" type="hidden" value="ticketView"/>
-							<input name="toArticle" type="hidden" value="toArticle"/>
-							<input  type="submit" value="Submit to Article"/>
-						</form>
-					</c:if>
+					
 						
 					<c:choose>
+						
 						<c:when ${requestSession.roleID} =='ADMIN'>
 							<form name="updateTicket" action="Controller" method="POST" id="updateTicket">
 								<div class="addTicketElement">	
 									<p class="firstInputs">Comment:</p><textarea  id="issueCommentTitle" name="issueCommentTitle"></textarea>
+									<div class="radios">
+										<label class="submitButton"> In Progress <input type="radio" name="issueStatus"  value="inProgress"/></label>
+										<label class="submitButton"> Completed <input type="radio" name="issueStatus" value="completed"/></label>
+									</div>
+									<input name="page" type="hidden" value="ticketView"/>
+									<input  type="submit" value="Update Ticket"/>
 								</div>
-								<div class="addTicketElement">	
-									<p class="firstInputs">Comment Title:</p><textarea  id="issueCommentBody" name="issueCommentBody"></textarea>
-								</div>
-								<label class="radioButton"> In Progress <input type="radio" name="issueStatus"  value="inProgress"/></label>
-								<label class="radioButton"> Completed <input type="radio" name="issueStatus" value="completed"/></label>
-								<input name="page" type="hidden" value="ticketView"/>
-								<input  type="submit" value="Update Ticket"/>
 							</form>
 						</c:when>
+						
 						<c:when ${requestSession.roleID} =='USER' && ${requestScope.ticket.Status}=='completed'}> 
 							<form name="updateTicket" action="Controller" method="POST" id="updateTicket">
-								<!--<div class="addTicketElement">	
-									<p class="firstInputs">Comment:</p><textarea  id="issueCommentTitle" name="issueCommentTitle"></textarea>
-								</div>-->
 								<div class="addTicketElement">	
 									<p class="firstInputs">Comment:</p><textarea  id="issueCommentBody" name="issueCommentBody"></textarea>
+									<div class="radios">
+										<label class="submitButton"> Reject Solution <input type="radio" name="issueStatus"  value="inProgress"/></label>
+										<label class="submitButton"> Accept Solution <input type="radio" name="issueStatus" value="resolved"/></label>	
+									</div>
+									<input name="page" type="hidden" value="ticketView"/>								
+								    <input  type="submit" value="Update Ticket"/>
 								</div>
-								<label class="radioButton"> Reject Solution <input type="radio" name="issueStatus"  value="inProgress"/></label>
-								<label class="radioButton"> Accept Solution <input type="radio" name="issueStatus" value="resolved"/></label>	
-								<input name="page" type="hidden" value="ticketView"/>								
-							<input  type="submit" value="Update Ticket"/>
 							</form>
 						</c:when>
+						
 						<c:when ${requestSession.roleID} =='USER'}> 
 							<form name="updateTicket" action="Controller" method="POST" id="updateTicket">
 								<div class="addTicketElement">	
@@ -107,10 +101,21 @@
 								<input  type="submit" value="Update Ticket"/>
 							</form>
 						</c:when>
+						
 						<c:otherwise>
 							<jsp:foward page="Controller"/>
 						</c:otherwise>
+						
 					</c:choose>
+					
+					<c:if test="${requestSession.roleID} == 'ADMIN' && ${requestScope.ticket.Status}=='resolved'">
+						<form name="toArticle" action="Controller" method="POST" id="toArticle">
+							<input name="page" type="hidden" value="ticketView"/>
+							<input name="toArticle" type="hidden" value="toArticle"/>
+							<input  type="submit" value="Submit to Article"/>
+						</form>
+					</c:if>
+					
 				</div>
 			</div>
 			

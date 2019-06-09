@@ -136,14 +136,26 @@ hr {
 	 margin-top: 15px;
 	 margin-bottom: 15px;
 	 height: 50px;
+	 line-height: 50px;
 	 border: 1px solid;
 	 border-radius: 5px;
-	 border-color: black;
 	 font-family: proxima nova, Arial, Helvetica, sans-serif;
 	 font-size: 16px;
 	 display:inline-block;
+	 text-align: center;
 
-	
+ }
+ .button {
+	 background-color: #0087d0;
+	 color: white;
+	 width: 200px;
+	 margin: auto;
+	 line-height: 20px;
+	 padding: 10px;
+	 border-radius: 5px;
+	 display: inline;
+	 font-family: proxima nova, Arial, Helvetica, sans-serif;
+	 font-size: 16px;
 	 
  }
   .browseButton {
@@ -156,7 +168,6 @@ hr {
 	 height: 50px;
 	 border: 1px solid;
 	 border-radius: 5px;
-	 border-color: black;
 	 font-family: proxima nova, Arial, Helvetica, sans-serif;
 	 font-size: 16px;
 	 display:inline-block;
@@ -179,23 +190,8 @@ hr {
  }
  input[type=radio] {
 	 float: right;
-	 height: 4px;
-	 width: 4px;
- }
+	 line-height: 50px;
  
- .button {
-	 background-color: #0087d0;
-	 color: white;
-	 width: 200px;
-	 margin: auto;
-	 line-height: 20px;
-	 padding: 10px;
-	 border-radius: 5px;
-	 display: inline;
-	 font-family: proxima nova, Arial, Helvetica, sans-serif;
-	 font-size: 16px;
-	 
- }
  .fileUpload {
 	 
 	 width: auto;
@@ -203,13 +199,13 @@ hr {
 	 font-family: proxima nova, Arial, Helvetica, sans-serif;
 	 border: 1px solid;
 	 border-radius: 5px;
-	 border-color: black;
 	 font-family: proxima nova, Arial, Helvetica, sans-serif;
 	 font-size: 16px;
 	 display:inline-block;
 	 margin-top: 10px;
 	 background-color: #0087d0;
 	 color: white;
+	
 	 
  }
  
