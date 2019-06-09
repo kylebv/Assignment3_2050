@@ -52,6 +52,7 @@ public class Controller extends HttpServlet {
 					if(nextJSP == null){
 						String category = request.getParameter("categoryBar");
 						String viewTicket = request.getParameter("viewTicket");
+						String newTicket = request.getParameter("newTicket");
 						if(category != null) nextJSP = sendTicketHome(request,session,category);
 						else if(viewTicket != null) nextJSP = sendTicketView(request,session,viewTicket);
 						else if(newTicket != null) nextJSP = sendAddNewTicket(request,session,null);
