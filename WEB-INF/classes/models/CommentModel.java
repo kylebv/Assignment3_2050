@@ -8,17 +8,25 @@ import java.util.Date;
  */
 public class CommentModel {
     String user, body;
-    int userID;
+    int ticketID;
     Date date;
 
     public CommentModel() {
     }
 
-    public CommentModel(String user, String body, int userID, Date date) {
+    public CommentModel(String user, String body, int ticketID, Date date) {
         this.user = user;
         this.body = body;
-        this.userID = userID;
+        this.ticketID = ticketID;
         this.date = date;
+    }
+
+    public int getTicketID() {
+        return ticketID;
+    }
+
+    public void setTicketID(int ticketID) {
+        this.ticketID = ticketID;
     }
 
     public String getUser() {
@@ -35,14 +43,6 @@ public class CommentModel {
 
     public void setBody(String body) {
         this.body = body;
-    }
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
     }
 
     public Date getDate() {

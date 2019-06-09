@@ -2,6 +2,7 @@ package models;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -9,23 +10,34 @@ import java.util.List;
  */
 public class KnowledgeBaseArticleModel {
     String user, category, title, body;
-    int userID, ticketID;
+    int userID, articleID, ticketID;
     Date dateCreated;
     List<FileModel> files;
 
-    public KnowledgeBaseArticleModel() {
-    }
 
-    public KnowledgeBaseArticleModel(String user, String category, String title, String body, int userID, int ticketID, Date dateCreated, List<FileModel> files) {
-
+    public KnowledgeBaseArticleModel(String user, String category, String title, String body, int userID, int articleID, int ticketID, Date dateCreated, List<FileModel> files) {
         this.user = user;
         this.category = category;
         this.title = title;
         this.body = body;
         this.userID = userID;
+        this.articleID = articleID;
         this.ticketID = ticketID;
         this.dateCreated = dateCreated;
         this.files = files;
+    }
+
+    public int getTicketID() {
+        return ticketID;
+    }
+
+    public void setTicketID(int ticketID) {
+        this.ticketID = ticketID;
+    }
+
+    public KnowledgeBaseArticleModel() {
+        files = new LinkedList<>();
+
     }
 
     public String getUser() {
@@ -68,12 +80,12 @@ public class KnowledgeBaseArticleModel {
         this.userID = userID;
     }
 
-    public int getTicketID() {
-        return ticketID;
+    public int getArticleID() {
+        return articleID;
     }
 
-    public void setTicketID(int ticketID) {
-        this.ticketID = ticketID;
+    public void setArticleID(int articleID) {
+        this.articleID = articleID;
     }
 
     public Date getDateCreated() {
