@@ -54,7 +54,10 @@
 					<p class="ticketLabel">Status:</p>
 					<div class= "cOut"><c:out value="${requestScope.ticket.status}" /></div>
 				</div>
+
+				<br>
 				<hr>
+				<div class="addTicketElement"><h3 class="ticketLabel">Ticket Comments</h3></div>
 				<div>
 					<c:forEach items="${requestScope.Comments}" var="CommentModel" >
 						<div>
@@ -94,14 +97,16 @@
 						<c:when test="${requestScope.roleID =='USER' && requestScope.ticket.status=='Completed'}"> 
 							<form name="updateTicket" action="Controller" method="POST" id="updateTicket">
 								<div class="viewTicketElement">	
-									<p class="ticketLabel">Comment:</p><textarea  id="issueCommentBody" name="issueCommentBody"></textarea>
+									<p class="ticketLabel">Add Comment:</p><textarea  id="issueCommentBody" name="issueCommentBody"></textarea>
 									<div class="radios">
 										<label class="submitButton"> Reject Solution <input type="radio" name="issueStatus"  value="In Progress"/></label>
 										<label class="submitButton"> Accept Solution <input type="radio" name="issueStatus" value="Resolved"/></label>	
 									</div>
-									<input name="viewTicket" type="hidden" value="${ticket.ticketID}"/>
-									<input name="page" type="hidden" value="ticketView"/>								
-								    <input  type="submit" name="updateTicket" value="Update Ticket"/>
+									<div class="addTicketElement">	
+										<input name="viewTicket" type="hidden" value="${ticket.ticketID}"/>
+										<input name="page" type="hidden" value="ticketView"/>								
+										<input  type="submit"  class="button" name="updateTicket" value="Update Ticket"/>
+									</div><hr><div class="addTicketElement"><h3 class="ticketLabel">Ticket Files</h3></div>
 								</div>
 							</form>
 						</c:when>
@@ -123,7 +128,7 @@
 							<input name="page" type="hidden" value="ticketView"/>
 							<input name="toArticle" type="hidden" value="toArticle"/>
 							<input name="viewTicket" type="hidden" value="${ticket.ticketID}"/>
-							<input  type="submit"  name="updateTicket" value="Submit to Article"/>
+							<input  type="submit" name="updateTicket" value="Submit to Article"/>
 						</form>
 					</c:if>
 					<h2>File Upload to Database</h2>
