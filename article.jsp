@@ -28,22 +28,22 @@
 		
 		<div class="pageContent">
 			<div id=articleList>
-				<div>
+				<div class="addTicketElement">
 					<c:out value="${requestScope.article.title}" />
 				</div>
-				<div>
+				<div class="addTicketElement">
 					<c:out value="${requestScope.article.user}" />
 				</div>
-				<div>
+				<div class="addTicketElement">
 					<c:out value="${requestScope.article.category}" />
 				</div>
-				<div>
+				<div class="addTicketElement">
 					<c:out value="${requestScope.article.body}" />
 				</div>
-				<div>
+				<div class="addTicketElement">
 					<c:out value="${requestScope.article.dateCreated}" />
 				</div>
-				<div>
+				<div class="addTicketElement">
 					<c:forEach items="${requestScope.article.files}" var="FileModel">
 						<div id="${FileModel.fileExtention}">
 							<c:out value="${FileModel.fileExtention}" />
