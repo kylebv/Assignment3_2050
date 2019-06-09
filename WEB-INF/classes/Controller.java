@@ -95,13 +95,13 @@ public class Controller extends HttpServlet {
 							if(Error) request.setAttribute("isError","t");
 							else {
 								if(Comment)QueryClass.addComment(new CommentModel(userName, issueCommentBody, Integer.parseInt(viewTicket), new Date()));
-								//ADD TICKET STATUS CHANGE@#%@$%&@%$)$%^VQ#%Y(@%*V#*%YV%S#(UYK)N$VME%Y( S$M (S$%(YUS ($
+								QueryClass.setTicketStatus(Integer.parseInt(viewTicket),ticket.getStatus());
 							}
 							nextJSP = sendTicketView(request,session,viewTicket);
 						}else if(toArticle != null){
 							if( role.equals("ADMIN") && ticket.getStatus().equals("resolved")){
-								//CHANGE TICKET TO ARTICLE@$%&@%$)$%^VQ#%Y(@%*V#*%YV%S#(UYK)N$VME%Y( S$M (S$%(YUS ($
-								 nextJSP = sendTicketHome(request,session,null);
+								createArticle(Integer.parseInt(viewTicket));
+								nextJSP = sendTicketHome(request,session,null);
 							}else{
 								nextJSP = sendTicketView(request,session,viewTicket);
 							}
