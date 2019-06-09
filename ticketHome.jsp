@@ -34,27 +34,33 @@
 			</div>
 		</div>
 		
-		<div id=pageContent>
+		<div class="pageContent">
 			<c:if test="${requestScope.roleID == 'ADMIN'}">
 				<div id=sortingBar> 
-				<h2> Select Type: </h2>
-				<div class=Buttons> 
-					<button onclick="clickHandlerCatBar('network')"> Network </button>
-					<button onclick="clickHandlerCatBar('software')"> Software </button> 
-					<button onclick="clickHandlerCatBar('hardware')"> Hardware </button> 				
-					<button onclick="clickHandlerCatBar('email')"> Email </button> 
-					<button onclick="clickHandlerCatBar('account')"> Account </button> 				
-				</div>
+				
+				<div class="addTicketElement">
+					<p> Select Type: </p>
+					<div class="radios">
+							<label class="radioButton"> Network: <input type="radio" name="issueCategory"  value="Network"/></label>
+							<label class="radioButton"> Software: <input type="radio" name="issueCategory" value="Software"/></label>
+							<label class="radioButton"> HardWare: <input type="radio" name="issueCategory" value="Hardware"/></label>
+							<label class="radioButton"> Email: <input type="radio" name="issueCategory" value="Email"/></label>
+							<label class="radioButton"> Account: <input type="radio" name="issueCategory" value="Account"/></label>
+						</div>
+					</div>	
 			</div>	
 			</c:if>
 			
 			<div id=articleList>
+				<div class="addTicketElement">
 				    <c:forEach items="${requestScope.tickets}" var="TicketModel">
 						<div id="${TicketModel.ticketID}">
 							<c:out value="${TicketModel.title}"/>
-							<button onclick="clickHandlerViewTicket(${TicketModel.ticketID})"class=viewButton> View Ticket </button> 
+							<hr>
+							<button class="button" onclick="clickHandlerViewTicket(${TicketModel.ticketID})"class=viewButton> View Ticket </button> 
 						</div>
 					</c:forEach>
+				</div>
 			</div>
 			
 		</div>
