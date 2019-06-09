@@ -5,13 +5,9 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.WebServlet;
 import java.util.*;
 
-
-
-
 @WebServlet(urlPatterns = {"/Controller"})
 public class Controller extends HttpServlet {
 	
-	//Query class login/username functions
 	//File stuff
 	
     public void doPost(HttpServletRequest request, HttpServletResponse response) 
@@ -22,7 +18,6 @@ public class Controller extends HttpServlet {
 		String userName = U.getUsername();
 		String role = U.getRole();
 		String pageSrc = request.getParameter("page");
-		QueryClass qc = new QueryClass();
 		//--------------------------------------------------------------------------
 		String nextJSP = null;
 		//--------------Decision-Tree-For-Page-State--------------------------------
@@ -100,7 +95,7 @@ public class Controller extends HttpServlet {
 							nextJSP = sendTicketView(request,session,viewTicket);
 						}else if(toArticle != null){
 							if( role.equals("ADMIN") && ticket.getStatus().equals("resolved")){
-								createArticle(Integer.parseInt(viewTicket));
+								QueryClass.createArticle(Integer.parseInt(viewTicket));
 								nextJSP = sendTicketHome(request,session,null);
 							}else{
 								nextJSP = sendTicketView(request,session,viewTicket);
@@ -196,7 +191,7 @@ public class Controller extends HttpServlet {
 		List<TicketModel> list = null;
 		if(role.equals("ADMIN")){
 			if(sortType == null) list = QueryClass.getTickets();
-			else list = QueryClass.getTicketsByCategory(sortType);
+			else list = QueryClass.getTickets/*ByCategory*/(/*sortType*/);
 		}else 
 			list = QueryClass.getTicketsByUser(userName);
 		request.setAttribute("tickets",list);
