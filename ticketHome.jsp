@@ -61,11 +61,11 @@
 				</div>
 			</div>
 			
-			<div>
+			<div class="addTicketElement">
 			<c:if test="${requestScope.roleID == 'USER'}">
 				<form name="addNewTicket" action="Controller" method="POST" id="addNewTicket">
 					<input name="page" type="hidden" value="ticketHome" />		
-					<input type="submit" name="newTicket" value="newTicket"/>
+					<input type="submit"  class="button" name="newTicket" value="New Ticket"/>
 				</form>
 			</c:if>
 			</div>
