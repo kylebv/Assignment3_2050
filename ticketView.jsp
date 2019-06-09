@@ -80,7 +80,7 @@
 							</form>
 						</c:when>
 						
-						<c:when test="${requestSession.roleID =='USER' && requestScope.ticket.Status=='completed'}"> 
+						<c:when test="${requestSession.roleID =='USER' && requestScope.ticket.Status=='Completed'}"> 
 							<form name="updateTicket" action="Controller" method="POST" id="updateTicket">
 								<div class="addTicketElement">	
 									<p class="firstInputs">Comment:</p><textarea  id="issueCommentBody" name="issueCommentBody"></textarea>
@@ -105,7 +105,7 @@
 						</c:when>
 					</c:choose>
 					
-					<c:if test="${requestSession.roleID == 'ADMIN' && requestScope.ticket.Status}=='resolved'}">
+					<c:if test="${requestSession.roleID == 'ADMIN' && requestScope.ticket.Status}=='Resolved'}">
 						<form name="toArticle" action="Controller" method="POST" id="toArticle">
 							<input name="page" type="hidden" value="ticketView"/>
 							<input name="toArticle" type="hidden" value="toArticle"/>
