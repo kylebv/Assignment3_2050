@@ -43,7 +43,7 @@
 					<c:out value="${requestScope.ticket.dateCreated}" />
 				</div>
 				<div>
-					<c:forEach items="${requestScope.ticket.comment}" var="CommentModel >
+					<c:forEach items="${requestScope.ticket.comments}" var="CommentModel >
 						<div>
 							<div class=body>
 								<c:out value="${CommentModel.body}" />
