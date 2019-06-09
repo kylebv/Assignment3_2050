@@ -10,19 +10,19 @@
 		<link href="styles/stylesheet.css" type="text/css" rel="stylesheet"  />
 	</head>
 	<body>
-		<form name="navigationBar" action="Controller" method="POST" id="navigationBar">
+		<form name="navigationBar" action="Controller" method="POST">
 			<input name="page" type="hidden" value="ticketHome"/>
-			<input name="navigationBar" type="hidden" value=""/>
+			<input name="navigationBar" type="hidden" value="" id="navigationBar"/>
 		</form>
 		
-		<form name="categoryBar" action="Controller" method="POST" id="categoryBar">
+		<form name="categoryBar" action="Controller" method="POST">
 			<input name="page" type="hidden" value="ticketHome"/>
-			<input name="categoryBar" type="hidden" value=""/>
+			<input name="categoryBar" type="hidden" value=""  id="categoryBar"/>
 		</form>
 		
-		<form name="viewTicket" action="Controller" method="POST" id="viewTicket">
+		<form name="viewTicket" action="Controller" method="POST">
 			<input name="page" type="hidden" value="ticketHome"/>
-			<input name="viewTicket" type="hidden" value=""/>
+			<input name="viewTicket" type="hidden" value="" id="viewTicket"/>
 		</form>
 		
 		<div class="pageheader"> 

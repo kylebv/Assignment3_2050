@@ -10,10 +10,11 @@
 		<link href="styles/stylesheet.css" type="text/css" rel="stylesheet"  />
 	</head>
 	<body>
-		<form name="navigationBar" action="Controller" method="POST" id="navigationBar">
-			<input name="page" type="hidden" value="article"/>
-			<input name="navigationBar" type="hidden" value=""/>
+		<form name="navigationBar" action="Controller" method="POST">
+			<input name="page" type="hidden" value="ticketHome"/>
+			<input name="navigationBar" type="hidden" value="" id="navigationBar"/>
 		</form>
+		
 		
 		<div class="pageheader"> 
 			<img src="images/logoSml.png" id="logoSml" alt="placeholder" >
