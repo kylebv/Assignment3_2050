@@ -216,6 +216,7 @@ public class Controller extends HttpServlet {
 		int ID = Integer.parseInt(id);
 		request.setAttribute("ticket",QueryClass.getTicket(ID));
 		request.setAttribute("files",QueryClass.getFiles(ID));
+		request.setAttribute("Comments",QueryClass.getTicket(ID).getComments());
 		return "ticketView.jsp";
 	}
 	

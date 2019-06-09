@@ -43,7 +43,7 @@
 					<c:out value="${requestScope.ticket.dateCreated}" />
 				</div>
 				<div>
-					<c:forEach items="${requestScope.ticket.comments}" var="CommentModel >
+					<c:forEach items="${requestScope.Comments}" var="CommentModel" >
 						<div>
 							<div class=body>
 								<c:out value="${CommentModel.body}" />
@@ -66,7 +66,7 @@
 						
 					<c:choose>
 						
-						<c:when ${requestSession.roleID} =='ADMIN'>
+						<c:when test="${requestSession.roleID =='ADMIN'}">
 							<form name="updateTicket" action="Controller" method="POST" id="updateTicket">
 								<div class="addTicketElement">	
 									<p class="firstInputs">Comment:</p><textarea  id="issueCommentTitle" name="issueCommentTitle"></textarea>
@@ -80,7 +80,7 @@
 							</form>
 						</c:when>
 						
-						<c:when ${requestSession.roleID} =='USER' && ${requestScope.ticket.Status}=='completed'}> 
+						<c:when test="${requestSession.roleID =='USER' && requestScope.ticket.Status=='completed'}"> 
 							<form name="updateTicket" action="Controller" method="POST" id="updateTicket">
 								<div class="addTicketElement">	
 									<p class="firstInputs">Comment:</p><textarea  id="issueCommentBody" name="issueCommentBody"></textarea>
@@ -94,7 +94,7 @@
 							</form>
 						</c:when>
 						
-						<c:when ${requestSession.roleID} =='USER'}> 
+						<c:when test="${requestSession.roleID =='USER'}"> 
 							<form name="updateTicket" action="Controller" method="POST" id="updateTicket">
 								<div class="addTicketElement">	
 									<p class="firstInputs">Comment:</p><textarea  id="issueCommentBody" name="issueCommentBody"></textarea>
@@ -103,14 +103,9 @@
 								<input  type="submit" value="Update Ticket"/>
 							</form>
 						</c:when>
-						
-						<c:otherwise>
-							<jsp:foward page="Controller"/>
-						</c:otherwise>
-						
 					</c:choose>
 					
-					<c:if test="${requestSession.roleID} == 'ADMIN' && ${requestScope.ticket.Status}=='resolved'">
+					<c:if test="${requestSession.roleID == 'ADMIN' && requestScope.ticket.Status}=='resolved'}">
 						<form name="toArticle" action="Controller" method="POST" id="toArticle">
 							<input name="page" type="hidden" value="ticketView"/>
 							<input name="toArticle" type="hidden" value="toArticle"/>
