@@ -146,12 +146,10 @@ public class QueryClass {
         } catch (Exception e) {
             e.printStackTrace();
         }
-		if(fileParts.size()>0){
-			for(Part p : fileParts)
-			{
-			  if(p!=null){  addFile(ticketID, p);}
-			}
-		}
+        for(Part p : fileParts)
+        {
+          if(p!=null){  addFile(ticketID, p);}
+        }
     }
 
 
@@ -306,8 +304,8 @@ public class QueryClass {
     }
 
     //grabs a file out of the database, based on the file id
-    public static void getFile(int fileID){
-        String query = "SELECT ID, fileName, fileData FROM TicketFile where ID = ? and isDeleted = 0;";
+    public static String getFile(int fileID){
+        String query = "SELECT ID, fileExtension, fileData FROM TicketFile where ID = ? and isDeleted = 0;";
         File f;
         try(Connection connection = DBConnector.getConnection(); //step 1
             PreparedStatement statement = connection.prepareStatement(query); //step 2
@@ -315,7 +313,7 @@ public class QueryClass {
             statement.setInt(1,fileID);
             ResultSet result = statement.executeQuery();
             if(result.next()) {
-                    f = new File(result.getString("fileName"));
+                    f = new File("/"+result.getString("fileExtension"));
                     FileOutputStream output = new FileOutputStream(f);//step 3 and 4
                     InputStream input = result.getBinaryStream("fileData");
                     byte[] buffer = new byte[1024];
@@ -326,11 +324,11 @@ public class QueryClass {
             }
         }
         catch(SQLException e){
-            System.err.println(e.getMessage());
-            System.err.println(e.getStackTrace());
+            return e.toString();
         } catch (Exception e) {
-            e.printStackTrace();
+            return e.toString();
         }
+        return "QQQ";
     }
 
     //sets the file as deleted in the db (as a flag)
@@ -386,7 +384,7 @@ public class QueryClass {
 
     //gets all the files from a ticket, usually a helper method for get ticket
     public static List<FileModel> getFiles(int ticketID){
-        String query = "SELECT ID, fileName FROM TicketFie where isDeleted = 0 and ticketID = ?;";
+        String query = "SELECT ID, fileExtension FROM TicketFile where isDeleted = 0 and ticketID = ?;";
         List<FileModel> files = new LinkedList<>();
         try(Connection connection = DBConnector.getConnection(); //step 1
             PreparedStatement statement = connection.prepareStatement(query); //step 2
@@ -399,7 +397,7 @@ public class QueryClass {
                     // you should be validating the following,
                     // this is just an example to get you started
                     file.setFileID(result.getInt("ID"));
-                    file.setFileName(result.getString("fileName"));
+                    file.setFileName(result.getString("fileExtension"));
                     files.add(file);
                 }
                 while (result.next());
@@ -433,7 +431,7 @@ public class QueryClass {
                 ticket.setDateCreated(result.getDate("dateCreated"));
                 ticket.setBody(result.getString("body"));
                 ticket.setTitle((result.getString("title")));
-                ticket.setStatus(result.getString("status"));
+                ticket.setStatus(result.getString("statusID"));
             }
             connection.close();
         }
@@ -581,7 +579,7 @@ public class QueryClass {
             article.setBody(article.getBody()+"<br>"+c.getUser()+"<br>"+c.getBody());
         }
         String query = "INSERT INTO KnowledgeBaseArticle (username, ticketID, categoryID, title, body, dateCreated) " +
-                "VALUES (?, ?, ?, ?, ?, ?, NOW())";
+                "VALUES (?, ?, ?, ?, ?, NOW());";
         try(Connection connection = DBConnector.getConnection(); //step 1
             PreparedStatement statement = connection.prepareStatement(query); //step 2
             ){

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="models.FileModel" %>
+<%@ page import="java.util.List" %>
 
 	<head>
 		<meta charset="UTF-8">
@@ -56,8 +58,8 @@
 				</div>
 				<div>
 					<c:forEach items="${requestScope.ticket.files}" var="FileModel">
-						<div id="${FileModel.fileExtention}">
-							<c:out value="${FileModel.fileExtention}" />
+						<div id="${FileModel.fileName}">
+							<c:out value="${FileModel.fileName}" />
 						</div>
 					</c:forEach>
 				</div>
@@ -66,7 +68,7 @@
 						
 					<c:choose>
 						
-						<c:when test="${sessionScope.roleID =='ADMIN'}">
+						<c:when test="${requestScope.roleID =='ADMIN'}">
 							<form name="updateTicket" action="Controller" method="POST" id="updateTicket">
 								<div class="addTicketElement">	
 									<p class="firstInputs">Comment:</p><textarea  id="issueCommentTitle" name="issueCommentTitle"></textarea>
@@ -75,12 +77,13 @@
 										<label class="submitButton"> Completed <input type="radio" name="issueStatus" value="completed"/></label>
 									</div>
 									<input name="page" type="hidden" value="ticketView"/>
-									<input  type="submit" value="Update Ticket"/>
+									<input name="viewTicket" type="hidden" value="${ticket.ticketID}"/>
+									<input  type="submit" name="updateTicket" value="Update Ticket"/>
 								</div>
 							</form>
 						</c:when>
 						
-						<c:when test="${sessionScope.roleID =='USER' && requestScope.ticket.Status=='Completed'}"> 
+						<c:when test="${requestScope.roleID =='USER' && requestScope.ticket.status=='Completed'}"> 
 							<form name="updateTicket" action="Controller" method="POST" id="updateTicket">
 								<div class="addTicketElement">	
 									<p class="firstInputs">Comment:</p><textarea  id="issueCommentBody" name="issueCommentBody"></textarea>
@@ -88,35 +91,56 @@
 										<label class="submitButton"> Reject Solution <input type="radio" name="issueStatus"  value="inProgress"/></label>
 										<label class="submitButton"> Accept Solution <input type="radio" name="issueStatus" value="resolved"/></label>	
 									</div>
+									<input name="viewTicket" type="hidden" value="${ticket.ticketID}"/>
 									<input name="page" type="hidden" value="ticketView"/>								
-								    <input  type="submit" value="Update Ticket"/>
+								    <input  type="submit" name="updateTicket" value="Update Ticket"/>
 								</div>
 							</form>
 						</c:when>
 						
-						<c:when test="${sessionScope.roleID =='USER'}"> 
+						<c:when test="${requestScope.roleID =='USER'}"> 
 							<form name="updateTicket" action="Controller" method="POST" id="updateTicket">
 								<div class="addTicketElement">	
 									<p class="firstInputs">Comment:</p><textarea  id="issueCommentBody" name="issueCommentBody"></textarea>
 								</div>
 								<input name="page" type="hidden" value="ticketView"/>
-								<input  type="submit" value="Update Ticket"/>
+								<input name="viewTicket" type="hidden" value="${ticket.ticketID}"/>
+								<input  type="submit" name="updateTicket" value="Update Ticket"/>
 							</form>
 						</c:when>
 					</c:choose>
 					
-					<c:if test="${sessionScope.roleID == 'ADMIN' && requestScope.ticket.Status}=='Resolved'}">
+					<c:if test="${requestScope.roleID == 'ADMIN' && requestScope.ticket.status == 'Resolved'}">
 						<form name="toArticle" action="Controller" method="POST" id="toArticle">
 							<input name="page" type="hidden" value="ticketView"/>
 							<input name="toArticle" type="hidden" value="toArticle"/>
-							<input  type="submit" value="Submit to Article"/>
+							<input name="viewTicket" type="hidden" value="${ticket.ticketID}"/>
+							<input  type="submit"  name="updateTicket" value="Submit to Article"/>
 						</form>
 					</c:if>
-					
+					<% List<FileModel> files = (List<FileModel>)request.getAttribute("files");
+						if(files!=null){for(FileModel s : files)
+						{ %>
+					<p>ID: <%=s.getFileID()%>, name: <%=s.getFileName()%></p>
+					<form method="post" action="Controller">
+						<input type="hidden" value="<%=s.getFileID()%>" name="delid"/>
+						<input name="page" type="hidden" value="ticketView"/>
+						<input name="viewTicket" type="hidden" value="${ticket.ticketID}"/>
+						<input type="submit" value="delete File">
+						</form>
+					<form method="get" action="downloadController">
+						<input type="hidden" value="<%=s.getFileID()%>" name="getid"/>
+						<input name="pageFrom" type="hidden" value="ticketView"/>
+						<input name="previousID" type="hidden" value="${ticket.ticketID}">
+						<input type="submit" value="download File">
+					</form>
+					<br>
+					<%}
+					}%>
 				</div>
 			</div>
 			
 		</div>
-		
+		<c:out value="${requestScope.ticket.ticketID}" /> 
 	</body>
 </html>

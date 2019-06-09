@@ -70,27 +70,28 @@ public class Controller extends HttpServlet {
 						String viewTicket = request.getParameter("viewTicket");
 						String issueStatus = request.getParameter("issueStatus");
 						String issueCommentBody = request.getParameter("issueCommentBody");
+						String fileToDelete = request.getParameter("delid");
 						TicketModel ticket = QueryClass.getTicket(Integer.parseInt(viewTicket));
 						if(updateTicket != null){
 							boolean Error = false, Comment = false;
-							if(!ticket.getStatus().equals(issueStatus)){
+							if(issueStatus != null){
 								switch(issueStatus){
 									case "inProgress":
-										if(role.equals("ADMIN") && (ticket.getStatus().equals("new") || ticket.getStatus().equals("completed")))
+										if(role.equals("ADMIN") && (ticket.getStatus().equals("New") || ticket.getStatus().equals("Completed")))
 											ticket.setStatus(issueStatus);
-										else if(role.equals("USER") && ticket.getStatus().equals("completed"))
+										else if(role.equals("USER") && ticket.getStatus().equals("Completed"))
 											ticket.setStatus(issueStatus);
 										else 
 											Error = true;
 									break;
 									case "completed":
-										if(role.equals("ADMIN") && (ticket.getStatus().equals("new") || ticket.getStatus().equals("inProgress")))
+										if(role.equals("ADMIN") && (ticket.getStatus().equals("New") || ticket.getStatus().equals("In Progress")))
 											ticket.setStatus(issueStatus);	
 										else 
 											Error = true;										
 									break;
 									case "resolved":
-										if(role.equals("USER") && ticket.getStatus().equals("completed"))
+										if(role.equals("USER") && ticket.getStatus().equals("Completed"))
 											ticket.setStatus(issueStatus);			
 										else 
 											Error = true;										
@@ -114,6 +115,9 @@ public class Controller extends HttpServlet {
 							}else{
 								nextJSP = sendTicketView(request,session,viewTicket);
 							}
+						}else if(fileToDelete != null){
+							QueryClass.deleteFile(Integer.parseInt(fileToDelete));
+							nextJSP = sendTicketView(request,session,viewTicket);
 						}else nextJSP = sendTicketView(request,session,viewTicket);
 					}
 				}					
@@ -156,7 +160,21 @@ public class Controller extends HttpServlet {
 						nextJSP = sendArticle(request,session,viewArticle);
 					}
 				}					
-			break;			
+			break;	
+			case "downloadPage":
+				if(role == null) nextJSP = sendLogin(request,session,null);
+				else{
+					String previousPage = request.getParameter("previousPage");
+					String previousID = request.getParameter("previousID");
+					if(previousPage.equals("article")){
+						nextJSP = sendTicketView(request,session,previousID);
+					}else if(previousPage.equals("ticketView")){
+						nextJSP = sendArticle(request,session,previousID);
+					}else{
+						nextJSP = sendLogin(request,session,null);
+					}
+				}
+			break;
 			default:
 				nextJSP = sendLogin(request,session,null);
 			break;
