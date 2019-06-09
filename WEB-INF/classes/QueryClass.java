@@ -444,7 +444,7 @@ public class QueryClass {
         return user;
     }
     public static UserModel getUser(String username){
-        String query = "SELECT username, password FROM User WHERE username = '"+username+"'";
+        String query = "SELECT username, password FROM User WHERE username = '"+username+"';";
         UserModel user = new UserModel();
         try(Connection connection = DBConnector.getConnection(); //step 1
             Statement statement = connection.createStatement(); //step 2
@@ -461,7 +461,7 @@ public class QueryClass {
         } catch (NamingException e) {
             e.printStackTrace();
         }
-        query = "SELECT username, roleID FROM UserRole WHERE username = '"+username+"'";
+        query = "SELECT username, roleID FROM UserRole WHERE username = '"+username+"';";
         try(Connection connection = DBConnector.getConnection(); //step 1
             Statement statement = connection.createStatement(); //step 2
             ResultSet result = statement.executeQuery(query);){ //step 3 and 4
