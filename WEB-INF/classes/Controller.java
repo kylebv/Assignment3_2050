@@ -230,7 +230,7 @@ public class Controller extends HttpServlet {
 	
 	private String sendArticle(HttpServletRequest request, HttpSession session, String id){
 		int ID = Integer.parseInt(id);
-		request.setAttribute("ticket",QueryClass.getArticle(ID));
+		request.setAttribute("article",QueryClass.getArticle(ID));
 		request.setAttribute("files",QueryClass.getFiles(ID));
 		return "article.jsp";
 	}
