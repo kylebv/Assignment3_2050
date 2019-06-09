@@ -23,7 +23,7 @@
 			</div>
 		</div>
 		<div class="pageContent">
-			<form  name="addNewTicket" action="Controller" method="POST" id="addNewTicket" enctype="multipart/form-data" >
+			<form  name="addNewTicket" action="Controller" method="POST" id="addNewTicket" >
 				<div class="addTicketElement">
 					<h1> New Ticket </h1>
 				</div>
@@ -44,11 +44,6 @@
 						<label class="radioButton"> Email: <input type="radio" name="issueCategory" value="Email"/></label>
 						<label class="radioButton"> Account: <input type="radio" name="issueCategory" value="Account"/></label>
 					</div>
-				</div>
-				<div class="addTicketElement">	
-					<p class="firstInputs">Upload Files:</p><input type="file" name ="file1" class="fileUpload" value="file upload"/>
-					<input type="file" name ="file2" class="fileUpload" value="file upload"/>
-					<input type="file" name ="file3" class="fileUpload" value="file upload"/>
 				</div>
 				<hr>
 				<input name="page" type="hidden" value="addNewTicket"/>

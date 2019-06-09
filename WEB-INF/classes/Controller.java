@@ -27,7 +27,7 @@ public class Controller extends HttpServlet {
 			userName = U.getUsername();
 			role = U.getRole();
 		}
-		String pageSrc = request.getParameter("page");
+		String pageSrc = request.getParameter("page");				
 		//--------------------------------------------------------------------------
 		String nextJSP = null;
 		//--------------Decision-Tree-For-Page-State--------------------------------
@@ -126,10 +126,9 @@ public class Controller extends HttpServlet {
 						String issueName = request.getParameter("issueName");
 						String issueDescription = request.getParameter("issueDescription");
 						String issueCategory = request.getParameter("issueCategory");
-						//Get files
 						if(issueName != null && issueDescription != null && issueCategory != null){
-							QueryClass.addTicket(userName,issueName,issueDescription,issueCategory,null/*not null*/);//NULL needs to be changed to file paths!!!!!!
-							//ADDD FILES
+							List<Part> parts = new LinkedList<>();
+							QueryClass.addTicket(userName,issueName,issueDescription,issueCategory,parts);
 							nextJSP = sendTicketHome(request,session,null);
 						}else nextJSP = sendAddNewTicket(request,session,"ERROR!!!!!!!!");
 					}

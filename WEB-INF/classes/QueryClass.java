@@ -146,10 +146,12 @@ public class QueryClass {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        for(Part p : fileParts)
-        {
-          if(p!=null){  addFile(ticketID, p);}
-        }
+		if(fileParts.size()>0){
+			for(Part p : fileParts)
+			{
+			  if(p!=null){  addFile(ticketID, p);}
+			}
+		}
     }
 
 
