@@ -46,18 +46,18 @@
 					<c:forEach items="${requestScope.ticket.comment}" var="CommentModel">
 						<div>
 							<div class=body>
-								<c:out value="${element.body}">
+								<c:out value="${CommentModel.body}">
 							</div>
 							<div class=user>
-								<c:out value="${element.user}">
+								<c:out value="${CommentModel.user}">
 							</div>
 						</div>
 					</c:forEach>
 				</div>
 				<div>
 					<c:forEach items="${requestScope.ticket.files}" var="FileModel">
-						<div id="${element.fileExtention}">
-							<c:out value="${element.fileExtention}">
+						<div id="${FileModel.fileExtention}">
+							<c:out value="${FileModel.fileExtention}">
 						</div>
 					</c:forEach>
 				</div>

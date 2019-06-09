@@ -50,9 +50,9 @@
 			</div>
 			<div id=articleList class="radios">
 				    <c:forEach items="${requestScope.articles}" var="KnowledgeBaseArticleModel">
-						<div id="${element.ticketID}">
-							<c:out value="${element.title}">
-							<button onclick="clickHandlerViewArticle(${element.ticketID})"class="browseButton"> View Article </button> 
+						<div id="${KnowledgeBaseArticleModel.ticketID}">
+							<c:out value="${KnowledgeBaseArticleModel.title}">
+							<button onclick="clickHandlerViewArticle(${KnowledgeBaseArticleModel.ticketID})"class="browseButton"> View Article </button> 
 						</div>
 					</c:forEach>
 			</div>

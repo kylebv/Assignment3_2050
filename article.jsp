@@ -44,8 +44,8 @@
 				</div>
 				<div>
 					<c:forEach items="${article.files}" var="FileModel">
-						<div id="${element.fileExtention}">
-							<c:out value="${element.fileExtention}">
+						<div id="${FileModel.fileExtention}">
+							<c:out value="${FileModel.fileExtention}">
 						</div>
 					</c:forEach>
 				</div>
