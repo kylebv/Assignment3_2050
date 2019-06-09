@@ -23,7 +23,7 @@
 			</div>
 		</div>
 		<div class="pageContent">
-			<form>
+			<form  name="addNewTicket" action="Controller" method="POST" id="addNewTicket">
 				<div class="addTicketElement">
 					<h1> New Ticket </h1>
 				</div>
