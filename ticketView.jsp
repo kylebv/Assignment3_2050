@@ -50,6 +50,10 @@
 					<p class="ticketLabel">Date Created:</p>
 					<div class= "cOut"><c:out value="${requestScope.ticket.dateCreated}" /></div>
 				</div>
+				<div class="viewTicketElement">
+					<p class="ticketLabel">Status:</p>
+					<div class= "cOut"><c:out value="${requestScope.ticket.status}" /></div>
+				</div>
 				<hr>
 				<div>
 					<c:forEach items="${requestScope.Comments}" var="CommentModel" >
@@ -77,8 +81,8 @@
 								<div class="viewTicketElement">	
 									<p class="ticketLabel">Comment:</p><textarea  id="issueCommentTitle" name="issueCommentTitle"></textarea>
 									<div class="radios">
-										<label class="submitButton"> In Progress <input type="radio" name="issueStatus"  value="inProgress"/></label>
-										<label class="submitButton"> Completed <input type="radio" name="issueStatus" value="completed"/></label>
+										<label class="submitButton"> In Progress <input type="radio" name="issueStatus"  value="In Progress"/></label>
+										<label class="submitButton"> Completed <input type="radio" name="issueStatus" value="Completed"/></label>
 									</div>
 									<input name="page" type="hidden" value="ticketView"/>
 									<input name="viewTicket" type="hidden" value="${ticket.ticketID}"/>
@@ -92,8 +96,8 @@
 								<div class="viewTicketElement">	
 									<p class="ticketLabel">Comment:</p><textarea  id="issueCommentBody" name="issueCommentBody"></textarea>
 									<div class="radios">
-										<label class="submitButton"> Reject Solution <input type="radio" name="issueStatus"  value="inProgress"/></label>
-										<label class="submitButton"> Accept Solution <input type="radio" name="issueStatus" value="resolved"/></label>	
+										<label class="submitButton"> Reject Solution <input type="radio" name="issueStatus"  value="In Progress"/></label>
+										<label class="submitButton"> Accept Solution <input type="radio" name="issueStatus" value="Resolved"/></label>	
 									</div>
 									<input name="viewTicket" type="hidden" value="${ticket.ticketID}"/>
 									<input name="page" type="hidden" value="ticketView"/>								
@@ -122,6 +126,21 @@
 							<input  type="submit"  name="updateTicket" value="Submit to Article"/>
 						</form>
 					</c:if>
+					<h2>File Upload to Database</h2>
+					<form method="post" action="uploadController?pageFrom=ticketView&viewTicket=${ticket.ticketID}" enctype="multipart/form-data">
+						<table border="0">
+							<tr>
+								<td>Upload file: </td>
+								<td><input type="file" name="file" size="50"/></td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<input type="submit" value="Save">
+								</td>
+							</tr>
+						</table>
+					</form>
+					
 					<% List<FileModel> files = (List<FileModel>)request.getAttribute("files");
 						if(files!=null){for(FileModel s : files)
 						{ %>

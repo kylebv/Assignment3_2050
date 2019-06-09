@@ -43,13 +43,19 @@
 				<div class="addTicketElement">
 					<c:out value="${requestScope.article.dateCreated}" />
 				</div>
-				<div class="addTicketElement">
-					<c:forEach items="${requestScope.article.files}" var="FileModel">
-						<div id="${FileModel.fileExtention}">
-							<c:out value="${FileModel.fileExtention}" />
-						</div>
-					</c:forEach>
-				</div>
+					<% List<FileModel> files = (List<FileModel>)request.getAttribute("files");
+						if(files!=null){for(FileModel s : files)
+						{ %>
+					<p>ID: <%=s.getFileID()%>, name: <%=s.getFileName()%></p>
+					<form method="get" action="downloadController">
+						<input type="hidden" value="<%=s.getFileID()%>" name="getid"/>
+						<input name="pageFrom" type="hidden" value="article"/>
+						<input name="previousID" type="hidden" value="${article.ticketID}">
+						<input type="submit" value="download File">
+					</form>
+					<br>
+					<%}
+					}%>
 			</div>
 			
 		</div>

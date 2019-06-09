@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import javax.servlet.*;
 
 @WebServlet("/uploadController")
 @MultipartConfig(maxFileSize = 16177215)    // upload file's size up to 16MB
@@ -19,13 +20,18 @@ public class uploadController extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
-        // obtains the upload file part in this multipart request
-        Part filePart1 = request.getPart("file1");
-        Part filePart2 = request.getPart("file2");
-        Part filePart3 = request.getPart("file3");
-
-        // forwards to the message page
-        response.sendRedirect("/testingFileInputandOutput.jsp?namey=");
-
+       // obtains the upload file part in this multipart request
+       Part filePart = request.getPart("file");
+	   String pageFrom = request.getParameter("pageFrom");
+	   String viewTicket = request.getParameter("viewTicket");
+       if(filePart!=null){
+           QueryClass.addFile(Integer.parseInt(viewTicket), filePart);
+       }
+  
+       // forwards back to the controller
+        request.setAttribute("page", pageFrom);
+		request.setAttribute("viewTicket", viewTicket);
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Controller?page=" + pageFrom + "&viewTicket=" + viewTicket);//NEEd TO CHANGE SO WEB INF HOLD JSP
+		dispatcher.forward(request,response);
     }
 }

@@ -76,7 +76,7 @@ public class Controller extends HttpServlet {
 							boolean Error = false, Comment = false;
 							if(issueStatus != null){
 								switch(issueStatus){
-									case "inProgress":
+									case "In Progress":
 										if(role.equals("ADMIN") && (ticket.getStatus().equals("New") || ticket.getStatus().equals("Completed")))
 											ticket.setStatus(issueStatus);
 										else if(role.equals("USER") && ticket.getStatus().equals("Completed"))
@@ -84,13 +84,13 @@ public class Controller extends HttpServlet {
 										else 
 											Error = true;
 									break;
-									case "completed":
+									case "Completed":
 										if(role.equals("ADMIN") && (ticket.getStatus().equals("New") || ticket.getStatus().equals("In Progress")))
 											ticket.setStatus(issueStatus);	
 										else 
 											Error = true;										
 									break;
-									case "resolved":
+									case "Resolved":
 										if(role.equals("USER") && ticket.getStatus().equals("Completed"))
 											ticket.setStatus(issueStatus);			
 										else 
