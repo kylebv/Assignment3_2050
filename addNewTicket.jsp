@@ -43,7 +43,7 @@
 					</div>
 				</div>
 				<div class="addTicketElement">	
-					<p class="firstInputs">Upload File:</p><button name ="file upload" class= "browseButton" value="file upload">Browse</button>
+					<p class="firstInputs">Upload File:</p><input type="file" name ="file upload" class="fileUpload" value="file upload"/>
 				</div>
 				<hr>
 				<input name="page" type="hidden" value="addNewTicket"/>
