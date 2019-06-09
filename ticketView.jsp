@@ -97,9 +97,11 @@
 										<label class="submitButton"> Reject Solution <input type="radio" name="issueStatus"  value="inProgress"/></label>
 										<label class="submitButton"> Accept Solution <input type="radio" name="issueStatus" value="resolved"/></label>	
 									</div>
-									<input name="viewTicket" type="hidden" value="${ticket.ticketID}"/>
-									<input name="page" type="hidden" value="ticketView"/>								
-								    <input  type="submit" name="updateTicket" value="Update Ticket"/>
+									<div class="addTicketElement">	
+										<input name="viewTicket" type="hidden" value="${ticket.ticketID}"/>
+										<input name="page" type="hidden" value="ticketView"/>								
+										<input  type="submit"  class="button" name="updateTicket" value="Update Ticket"/>
+									</div><hr><div class="addTicketElement"><h3 class="ticketLabel">Ticket Files</h3></div>
 								</div>
 							</form>
 						</c:when>
@@ -121,7 +123,7 @@
 							<input name="page" type="hidden" value="ticketView"/>
 							<input name="toArticle" type="hidden" value="toArticle"/>
 							<input name="viewTicket" type="hidden" value="${ticket.ticketID}"/>
-							<input  type="submit"  name="updateTicket" value="Submit to Article"/>
+							<input  type="submit" name="updateTicket" value="Submit to Article"/>
 						</form>
 					</c:if>
 					<% List<FileModel> files = (List<FileModel>)request.getAttribute("files");
