@@ -262,7 +262,7 @@ public class QueryClass {
                     article.setUser(result.getString("username"));
                     article.setTicketID(result.getInt("ID"));
                     article.setCategory(result.getString("categoryID"));
-                    article.setDateCreated(result.getDate("date"));
+                    article.setDateCreated(result.getDate("dateCreated"));
                     article.setBody(result.getString("body"));
                     article.setTitle(result.getString("title"));
                     articleList.add(article);

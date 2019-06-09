@@ -16,7 +16,7 @@
 		</form>
 		
 		
-		<form name="categoryBarF" action="Controller" method="POST" id="catFormId">>
+		<form name="categoryBarF" action="Controller" method="POST" id="catFormId">
 			<input name="page" type="hidden" value="knowledgeBase"/>
 			<input name="categoryBar" type="hidden" value=""  id="categoryBarE"/>
 		</form>
@@ -42,11 +42,11 @@
 					<h1> Select Type: </h1>
 				</div><hr>
 				<div class="radios"> 
-					<button class="radioButton" onclick="clickHandlerCatBar('network')"> Network </button>
-					<button class="radioButton" onclick="clickHandlerCatBar('software')"> Software </button> 
-					<button class="radioButton" onclick="clickHandlerCatBar('hardware')"> Hardware </button> 				
-					<button class="radioButton" onclick="clickHandlerCatBar('email')"> Email </button> 
-					<button class="radioButton" onclick="clickHandlerCatBar('account')"> Account </button> 				
+					<button class="radioButton" onclick="clickHandlerCatBar('Network')"> Network </button>
+					<button class="radioButton" onclick="clickHandlerCatBar('Software')"> Software </button> 
+					<button class="radioButton" onclick="clickHandlerCatBar('Hardware')"> Hardware </button> 				
+					<button class="radioButton" onclick="clickHandlerCatBar('Email')"> Email </button> 
+					<button class="radioButton" onclick="clickHandlerCatBar('Account')"> Account </button> 				
 				</div>
 			</div>
 			<div id=articleList class="radios">
