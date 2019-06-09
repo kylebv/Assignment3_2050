@@ -29,22 +29,22 @@
 		<div class="pageContent">
 			<div id=articleList>
 				<div>
-					<c:out value="${article.title}" />
+					<c:out value="${requestScope.article.title}" />
 				</div>
 				<div>
-					<c:out value="${article.user}" />
+					<c:out value="${requestScope.article.user}" />
 				</div>
 				<div>
-					<c:out value="${article.category}" />
+					<c:out value="${requestScope.article.category}" />
 				</div>
 				<div>
-					<c:out value="${article.body}" />
+					<c:out value="${requestScope.article.body}" />
 				</div>
 				<div>
-					<c:out value="${article.dateCreated}" />
+					<c:out value="${requestScope.article.dateCreated}" />
 				</div>
 				<div>
-					<c:forEach items="${article.files}" var="FileModel">
+					<c:forEach items="${requestScope.article.files}" var="FileModel">
 						<div id="${FileModel.fileExtention}">
 							<c:out value="${FileModel.fileExtention}" />
 						</div>
