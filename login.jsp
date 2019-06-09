@@ -24,13 +24,14 @@
 					<input name="page" type="hidden" value="login"/>
 					<div> <input class= "submitButton" type="submit" value="Sign In" /> </div>
 				</form>
-			</div>
-		
 			<c:if test = "${requestScope.isLoginError != null}">
 				<div id="errorMessage">
 					<p> Error loging on, please try again. </p>
 				</div>
 			</c:if>
+			</div>
+		
+			
 
 		
 		
