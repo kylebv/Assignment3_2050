@@ -76,7 +76,7 @@
 						
 					<c:choose>
 						
-						<c:when test="${requestSession.roleID =='ADMIN'}">
+						<c:when test="${sessionScope.roleID =='ADMIN'}">
 							<form name="updateTicket" action="Controller" method="POST" id="updateTicket">
 								<div class="viewTicketElement">	
 									<p class="ticketLabel">Comment:</p><textarea  id="issueCommentTitle" name="issueCommentTitle"></textarea>
@@ -90,7 +90,7 @@
 							</form>
 						</c:when>
 						
-						<c:when test="${requestSession.roleID =='USER' && requestScope.ticket.Status=='completed'}"> 
+						<c:when test="${sessionScope.roleID =='USER' && requestScope.ticket.Status=='Completed'}"> 
 							<form name="updateTicket" action="Controller" method="POST" id="updateTicket">
 								<div class="viewTicketElement">	
 									<p class="ticketLabel">Comment:</p><textarea  id="issueCommentBody" name="issueCommentBody"></textarea>
@@ -104,7 +104,7 @@
 							</form>
 						</c:when>
 						
-						<c:when test="${requestSession.roleID =='USER'}"> 
+						<c:when test="${sessionScope.roleID =='USER'}"> 
 							<form name="updateTicket" action="Controller" method="POST" id="updateTicket">
 								<div class="viewTicketElement">	
 									<p class="ticketLabel">Comment:</p><textarea  id="issueCommentBody" name="issueCommentBody"></textarea>
@@ -115,7 +115,7 @@
 						</c:when>
 					</c:choose>
 					
-					<c:if test="${requestSession.roleID == 'ADMIN' && requestScope.ticket.Status}=='resolved'}">
+					<c:if test="${sessionScope.roleID == 'ADMIN' && requestScope.ticket.Status}=='Resolved'}">
 						<form name="toArticle" action="Controller" method="POST" id="toArticle">
 							<input name="page" type="hidden" value="ticketView"/>
 							<input name="toArticle" type="hidden" value="toArticle"/>
