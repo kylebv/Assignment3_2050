@@ -23,31 +23,34 @@
 			<input name="viewArticle" type="hidden" value=""/>
 		</form>
 	
-		<div id=pageheader> 
-			<h1> IT Services </h1> 
-			<div id=navagationBar> 
-				<button onclick="clickHandlerNavBar('tickets')"> Tickets </button>
-				<button onclick="clickHandlerNavBar('knowledgeBase')"> KnowledgeBase </button> 
-				<button onclick="clickHandlerNavBar('logout')"> Logout </button> 				
+		<div class="pageheader"> 
+			<img src="images/logoSml.png" id="logoSml" alt="placeholder" >
+			<div class="navagationBar"> 
+					<button class="button" onclick="clickHandlerNavBar('tickets')"> Tickets </button>
+					<button class="button" onclick="clickHandlerNavBar('knowledgeBase')"> KnowledgeBase </button> 
+					<button class="button" onclick="clickHandlerNavBar('logout')"> Logout </button> 				
 			</div>
 		</div>
 		
-		<div id=pageContent>
+		
+		<div class="pageContent">
 			<div id=sortingBar> 
-				<h2> Select Type: </h2>
-				<div class=Buttons> 
-					<button onclick="clickHandlerCatBar('network')"> Network </button>
-					<button onclick="clickHandlerCatBar('software')"> Software </button> 
-					<button onclick="clickHandlerCatBar('hardware')"> Hardware </button> 				
-					<button onclick="clickHandlerCatBar('email')"> Email </button> 
-					<button onclick="clickHandlerCatBar('account')"> Account </button> 				
+				<div class="addTicketElement">
+					<h1> Select Type: </h1>
+				</div><hr>
+				<div class="radios"> 
+					<button class="radioButton" onclick="clickHandlerCatBar('network')"> Network </button>
+					<button class="radioButton" onclick="clickHandlerCatBar('software')"> Software </button> 
+					<button class="radioButton" onclick="clickHandlerCatBar('hardware')"> Hardware </button> 				
+					<button class="radioButton" onclick="clickHandlerCatBar('email')"> Email </button> 
+					<button class="radioButton" onclick="clickHandlerCatBar('account')"> Account </button> 				
 				</div>
 			</div>
-			<div id=articleList>
+			<div id=articleList class="radios">
 				    <c:forEach items="${requestScope.articles}" var="KnowledgeBaseArticleModel">
 						<div id="${element.ticketID}">
 							<c:out value="${element.title}">
-							<button onclick="clickHandlerViewArticle(${element.ticketID})"class=viewButton> View Article </button> 
+							<button onclick="clickHandlerViewArticle(${element.ticketID})"class="browseButton"> View Article </button> 
 						</div>
 					</c:forEach>
 			</div>

@@ -1,8 +1,4 @@
 import models.*;
-<<<<<<< HEAD
-
-=======
->>>>>>> 6675097af7c0cb48c0842e75337cd81b176e0443
 import javax.naming.NamingException;
 import javax.sql.*;
 import java.io.*;
@@ -102,11 +98,7 @@ public class QueryClass {
         }
         for(String s : filePaths)
         {
-<<<<<<< HEAD
             addFile(ticketID, s);
-=======
-            addFile();
->>>>>>> 6675097af7c0cb48c0842e75337cd81b176e0443
         }
     }
 

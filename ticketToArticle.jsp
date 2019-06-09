@@ -5,17 +5,15 @@
 		<meta charset="UTF-8">
 		<title>Login Page</title>
 		<script src="JavaScriptLibrary.js"></script>
-		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CssSheet.css" />
+		<link href="styles/stylesheet.css" type="text/css" rel="stylesheet" />
 	</head>
 	<body>
-		<div id=pageheader> 
-			<h1> IT Services </h1> 
-			<div id=navagationBar> 
-				<div class=Buttons>
-					<span class=ticketButton> Tickets </span> 
-					<span class=KBButton> Knowledge Base </span> 
-					<span class=logoutButton> Logout </span> 
-				</div>
+		<div class="pageheader"> 
+			<img src="images/logoSml.png" id="logoSml" alt="placeholder" >
+			<div class="navagationBar"> 
+					<button class="button" onclick="clickHandlerNavBar('tickets')"> Tickets </button>
+					<button class="button" onclick="clickHandlerNavBar('knowledgeBase')"> KnowledgeBase </button> 
+					<button class="button" onclick="clickHandlerNavBar('logout')"> Logout </button> 				
 			</div>
 		</div>
 		
