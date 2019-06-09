@@ -66,13 +66,7 @@
 						<br>
 					</c:forEach>
 				</div>
-				<div class="viewTicketElement">
-					<c:forEach items="${requestScope.ticket.files}" var="FileModel">
-						<div id="${FileModel.fileName}">
-							<div class= "cOut"><c:out value="${FileModel.fileName}" /></div>
-						</div>
-					</c:forEach>
-				</div>
+
 				<div>
 					
 						
