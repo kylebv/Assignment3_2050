@@ -37,6 +37,7 @@ public class Controller extends HttpServlet {
 				String submitPassword = request.getParameter("password");
 				if(submitUserName != null || submitPassword != null){
 					if(isVaildLogin(submitUserName,submitPassword)){
+						System.out.println("HERE2");
 						U = QueryClass.getUser(submitUserName,submitPassword);
 						login(request,session,U);
 						nextJSP = sendTicketHome(request,session,null);
@@ -184,7 +185,8 @@ public class Controller extends HttpServlet {
 	
 	private boolean isVaildLogin(String name,String pw){
 		UserModel u = QueryClass.getUser(name);
-		if(pw != null && u != null) if(pw.equals(u.getPassword())) return true;
+		System.out.println(name + " " + pw + " " + u.getUsername() + " " + u.getPassword());
+		if(pw != null && u != null){if(pw.equals(u.getPassword())) return true; }
 		return false;
 	}
 	
