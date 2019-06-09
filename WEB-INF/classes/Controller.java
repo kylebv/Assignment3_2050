@@ -10,13 +10,23 @@ public class Controller extends HttpServlet {
 	
 	//File stuff
 	
+	public void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/" + sendLogin(request,session,null));//NEEd TO CHANGE SO WEB INF HOLD JSP
+		dispatcher.forward(request,response);
+	}
+	
     public void doPost(HttpServletRequest request, HttpServletResponse response) 
     	throws ServletException, IOException {
 		//-------------Get-Information---------------------------------------
 		HttpSession session = request.getSession(); 
 		UserModel U = (UserModel) session.getAttribute("user");
-		String userName = U.getUsername();
-		String role = U.getRole();
+		String userName = null;
+		String role = null;
+		if( U != null ){
+			userName = U.getUsername();
+			role = U.getRole();
+		}
 		String pageSrc = request.getParameter("page");
 		//--------------------------------------------------------------------------
 		String nextJSP = null;
@@ -149,7 +159,7 @@ public class Controller extends HttpServlet {
 			break;
 		}
 		request.setAttribute("roleID",role);
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);//NEEd TO CHANGE SO WEB INF HOLD JSP
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/" + nextJSP);//NEEd TO CHANGE SO WEB INF HOLD JSP
 		dispatcher.forward(request,response);
 		//--------------------------------------------------------------------------
 	} 
@@ -181,7 +191,7 @@ public class Controller extends HttpServlet {
 	private String sendLogin(HttpServletRequest request, HttpSession session, String loginError){
 		logout(request,session);
 		if(loginError != null) request.setAttribute("isLoginError",loginError);
-		return "ticketHome.jsp";
+		return "login.jsp";
 	}
 	
 	private String sendTicketHome(HttpServletRequest request, HttpSession session, String sortType){

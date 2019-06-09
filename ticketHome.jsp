@@ -51,7 +51,7 @@
 			<div id=articleList>
 				    <c:forEach items="${requestScope.tickets}" var="TicketModel">
 						<div id="${element.ticketID}">
-							<c:out value="${element.title}">
+							<c:out value="${element.title}"/>
 							<button onclick="clickHandlerViewTicket(${element.ticketID})"class=viewButton> View Ticket </button> 
 						</div>
 					</c:forEach>
