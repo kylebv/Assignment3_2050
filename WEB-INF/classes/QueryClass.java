@@ -1,5 +1,6 @@
 import models.*;
 import javax.naming.NamingException;
+import javax.servlet.http.Part;
 import javax.sql.*;
 import java.io.*;
 import java.sql.*;
@@ -16,6 +17,7 @@ public class QueryClass {
     public static List<TicketModel> getTickets(){
         String query = "SELECT ID, username, categoryID, title, body, dateCreated, statusID FROM Ticket order by dateCreated desc;";
         List<TicketModel> ticketList = new LinkedList<>();
+
         try(Connection connection = DBConnector.getConnection(); //step 1
             Statement statement = connection.createStatement(); //step 2
             ResultSet result = statement.executeQuery(query);){ //step 3 and 4
@@ -90,7 +92,7 @@ public class QueryClass {
             ){
             statement.setString(1, _status);
             statement.setInt(2, _ticketID);
-            ResultSet result = statement.executeQuery();//step 3 and 4
+            statement.executeUpdate();//step 3 and 4
             connection.close();
         }
         catch(SQLException e){
@@ -111,7 +113,7 @@ public class QueryClass {
             statement.setInt(1,cm.getTicketID());
             statement.setString(2,cm.getBody());
             statement.setString(3,cm.getUser());
-            ResultSet result = statement.executeQuery();
+            statement.executeUpdate();
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -119,7 +121,7 @@ public class QueryClass {
     }
 
     //inserts a new ticket
-    public static void addTicket(String username, String title, String body, String category, List<String> filePaths)
+    public static void addTicket(String username, String title, String body, String category, List<Part> fileParts)
     {
         String query = "INSERT INTO Ticket (username, title, body, category, dateCreated) VALUES (?, ?, ?, ?, NOW());";
         try(Connection connection = DBConnector.getConnection(); //step 1
@@ -129,7 +131,7 @@ public class QueryClass {
             statement.setString(2,title);
             statement.setString(3, body);
             statement.setString(4, category);
-            ResultSet result = statement.executeQuery();
+            statement.executeUpdate();
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -144,22 +146,22 @@ public class QueryClass {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        for(String s : filePaths)
+        for(Part p : fileParts)
         {
-            addFile(ticketID, s);
+          if(p!=null){  addFile(ticketID, p);}
         }
     }
 
 
     //adds a file to the database for a said ticket
-    public static void addFile(int ticketID, String filePath)
+    public static void addFile(int ticketID, Part filePart)
     {
+
         try {
             Connection connection = DBConnector.getConnection();
-            File file = new File(filePath);
-            FileInputStream input = new FileInputStream(file);
-            String updateSQL = "insert into TicketFile (ticketID, fileName, fileData, isDeleted) values (?, ?, ?, 0)) ";
-            String fileName = filePath.substring(filePath.lastIndexOf("\\")+1);
+            InputStream input = filePart.getInputStream();
+            String updateSQL = "insert into TicketFile (ticketID, fileExtension, fileData, isDeleted) values (?, ?, ?, 0); ";
+            String fileName = filePart.getSubmittedFileName();
             PreparedStatement pstmt = connection.prepareStatement(updateSQL);
             pstmt.setBinaryStream(3, input);
             pstmt.setInt(1, ticketID);
@@ -167,11 +169,7 @@ public class QueryClass {
             pstmt.executeUpdate();
             connection.close();
         }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (NamingException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -247,7 +245,7 @@ public class QueryClass {
 
     //gets all the articles by category to display as a list
     public static List<KnowledgeBaseArticleModel> getArticlesByCategory(String category){
-        String query = "SELECT ID, username, categoryID, title, body, dateCreated FROM KnowledgeBaseArticle where categoryID = ? order by dateCreated desc;";
+        String query = "SELECT ID, username, categoryID, title, body, dateCreated, ticketID FROM KnowledgeBaseArticle where categoryID = ? order by dateCreated desc;";
         List<KnowledgeBaseArticleModel> articleList = new LinkedList<>();
         try(Connection connection = DBConnector.getConnection(); //step 1
             PreparedStatement statement = connection.prepareStatement(query); //step 2
@@ -260,7 +258,8 @@ public class QueryClass {
                     // you should be validating the following,
                     // this is just an example to get you started
                     article.setUser(result.getString("username"));
-                    article.setTicketID(result.getInt("ID"));
+                    article.setArticleID(result.getInt("ID"));
+                    article.setTicketID(result.getInt("ticketID"));
                     article.setCategory(result.getString("categoryID"));
                     article.setDateCreated(result.getDate("dateCreated"));
                     article.setBody(result.getString("body"));
@@ -340,7 +339,7 @@ public class QueryClass {
             PreparedStatement statement = connection.prepareStatement(query); //step 2
             ){
             statement.setInt(1,fileID);
-            ResultSet result = statement.executeQuery();
+            statement.executeUpdate();
             connection.close();
         }
         catch(SQLException e){
@@ -449,7 +448,7 @@ public class QueryClass {
 
     //returns a ticket and populates all the files and comments for a ticket
     public static KnowledgeBaseArticleModel getArticle(int articleID){
-        String query = "SELECT ID, username, categoryID, title, body, dateCreated FROM KnowledgeBaseArticle WHERE ID = ?;";
+        String query = "SELECT ID, username, categoryID, title, body, dateCreated, ticketID FROM KnowledgeBaseArticle WHERE ID = ?;";
         KnowledgeBaseArticleModel article = new KnowledgeBaseArticleModel();
         try(Connection connection = DBConnector.getConnection(); //step 1
             PreparedStatement statement = connection.prepareStatement(query); //step 2
@@ -461,6 +460,7 @@ public class QueryClass {
                 // this is just an example to get you started
                 article.setUser(result.getString("username"));
                 article.setTicketID(result.getInt("ticketID"));
+                article.setArticleID(result.getInt("ID"));
                 article.setCategory(result.getString("categoryID"));
                 article.setDateCreated(result.getDate("dateCreated"));
                 article.setBody(result.getString("body"));
@@ -588,7 +588,7 @@ public class QueryClass {
             statement.setString(3, article.getCategory());
             statement.setString(4, article.getTitle());
             statement.setString(5, article.getBody());
-            ResultSet result = statement.executeQuery();//step 3 and 4
+            statement.executeUpdate();//step 3 and 4
             connection.close();
         }
         catch(SQLException e){
