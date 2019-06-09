@@ -121,9 +121,9 @@ public class QueryClass {
     }
 
     //inserts a new ticket
-    public static void addTicket(String username, String title, String body, String category, List<Part> fileParts)
+    public static void addTicket(String username, String title, String body, String category)
     {
-        String query = "INSERT INTO Ticket (username, title, body, category, dateCreated) VALUES (?, ?, ?, ?, NOW());";
+        String query = "INSERT INTO Ticket (username, title, body, categoryID, dateCreated) VALUES (?, ?, ?, ?, NOW());";
         try(Connection connection = DBConnector.getConnection(); //step 1
             PreparedStatement statement = connection.prepareStatement(query); //step 2
         ) {
@@ -135,20 +135,6 @@ public class QueryClass {
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        int ticketID = 0;
-        query = "SELECT LAST_INSERT_ID('Ticket') as ID ;";
-        try(Connection connection = DBConnector.getConnection(); //step 1
-            Statement statement = connection.createStatement(); //step 2
-            ResultSet result = statement.executeQuery(query);) {
-            ticketID = result.getInt("ID");
-            connection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        for(Part p : fileParts)
-        {
-          if(p!=null){  addFile(ticketID, p);}
         }
     }
 

@@ -131,8 +131,7 @@ public class Controller extends HttpServlet {
 						String issueDescription = request.getParameter("issueDescription");
 						String issueCategory = request.getParameter("issueCategory");
 						if(issueName != null && issueDescription != null && issueCategory != null){
-							List<Part> parts = new LinkedList<>();
-							QueryClass.addTicket(userName,issueName,issueDescription,issueCategory,parts);
+							QueryClass.addTicket(userName,issueName,issueDescription,issueCategory);
 							nextJSP = sendTicketHome(request,session,null);
 						}else nextJSP = sendAddNewTicket(request,session,"ERROR!!!!!!!!");
 					}
